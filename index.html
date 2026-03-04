@@ -1,1168 +1,687 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الخطة العلاجية الذكية - د. مادح محمد</title>
-    <style>
-        * {
-            transition: all 0.3s ease;
-        }
-        
-        :root {
-            --primary-blue: #004d7a;
-            --secondary-green: #2ecc71;
-            --warning-orange: #f39c12;
-            --danger-red: #e74c3c;
-            --light-gray: #f4f7f6;
-            --dark-bg: #1a1a1a;
-            --dark-card: #2d2d2d;
-            --dark-text: #ffffff;
-            --border-radius: 10px;
-            --box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-        }
-        
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--light-gray);
-            margin: 0;
-            padding: 10px;
-            line-height: 1.6;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        
-        body.dark-mode {
-            background-color: var(--dark-bg);
-            color: var(--dark-text);
-        }
-        
-        body.dark-mode .container {
-            background: var(--dark-card);
-        }
-        
-        body.dark-mode .section {
-            border-bottom-color: #444;
-        }
-        
-        body.dark-mode .check-list li {
-            background: #3d3d3d;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: var(--box-shadow);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: var(--primary-blue);
-            color: white;
-            padding: 25px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .header h1 { margin: 0; font-size: 24px; }
-        .header p { margin: 5px 0 0; opacity: 0.9; }
-        
-        .dark-mode-toggle {
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .section { padding: 20px; border-bottom: 1px solid #eee; }
-        .section-title {
-            color: var(--primary-blue);
-            border-right: 5px solid var(--secondary-green);
-            padding-right: 10px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-        }
-        
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
-        /* توقيت زمني */
-        .timeline {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .time-point {
-            background: var(--primary-blue);
-            color: white;
-            padding: 15px;
-            border-radius: 50%;
-            width: 90px;
-            height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-weight: bold;
-            box-shadow: var(--box-shadow);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        /* مؤقت */
-        .timer-container {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--primary-blue), #0066a0);
-            color: white;
-            border-radius: var(--border-radius);
-            margin: 15px 0;
-        }
-        
-        .timer-display {
-            font-size: 3em;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        
-        .timer-controls button {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid white;
-            color: white;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        
-        .timer-controls button:hover {
-            background: white;
-            color: var(--primary-blue);
-        }
-        
-        /* أشرطة التقدم */
-        .progress-container {
-            margin: 15px 0;
-        }
-        
-        .progress-bar {
-            height: 25px;
-            background: #eee;
-            border-radius: 15px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: var(--secondary-green);
-            border-radius: 15px;
-            width: 0%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.8em;
-            transition: width 1s ease;
-        }
-        
-        /* المؤشرات الحيوية */
-        .vital-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 15px 0;
-        }
-        
-        .vital-card {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: var(--border-radius);
-            border: 1px solid #dee2e6;
-        }
-        
-        body.dark-mode .vital-card {
-            background: #3d3d3d;
-            border-color: #555;
-        }
-        
-        .vital-card label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--primary-blue);
-            font-weight: bold;
-        }
-        
-        .vital-card input, .vital-card select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
-        
-        /* الرسوم البيانية */
-        .chart-container {
-            height: 300px;
-            margin: 20px 0;
-            position: relative;
-        }
-        
-        .mini-chart {
-            display: flex;
-            align-items: flex-end;
-            height: 200px;
-            gap: 10px;
-            padding: 20px 0;
-        }
-        
-        .chart-bar {
-            flex: 1;
-            background: var(--primary-blue);
-            min-width: 30px;
-            border-radius: 5px 5px 0 0;
-            position: relative;
-            animation: rise 1s ease;
-        }
-        
-        @keyframes rise {
-            from { height: 0; }
-            to { height: var(--height); }
-        }
-        
-        .chart-bar::after {
-            content: attr(data-value);
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 12px;
-        }
-        
-        .chart-label {
-            text-align: center;
-            margin-top: 5px;
-            font-size: 12px;
-        }
-        
-        /* نظام النقاط والتحفيز */
-        .points-system {
-            background: linear-gradient(135deg, #f39c12, #f1c40f);
-            color: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            margin: 15px 0;
-        }
-        
-        .points-display {
-            font-size: 2.5em;
-            font-weight: bold;
-            text-align: center;
-        }
-        
-        .badges-container {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 15px 0;
-        }
-        
-        .badge {
-            background: var(--primary-blue);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            opacity: 0.5;
-            cursor: pointer;
-        }
-        
-        .badge.earned {
-            opacity: 1;
-            transform: scale(1.1);
-            box-shadow: 0 0 15px gold;
-        }
-        
-        /* توصيات ذكية */
-        .recommendation-box {
-            background: #e3f2fd;
-            border-right: 5px solid var(--primary-blue);
-            padding: 15px;
-            border-radius: var(--border-radius);
-            margin: 10px 0;
-        }
-        
-        body.dark-mode .recommendation-box {
-            background: #2d3e4f;
-        }
-        
-        /* وصفات الطعام */
-        .recipe-card {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 15px;
-            box-shadow: var(--box-shadow);
-            border: 1px solid #eee;
-        }
-        
-        body.dark-mode .recipe-card {
-            background: #3d3d3d;
-            border-color: #555;
-        }
-        
-        .recipe-image {
-            width: 100%;
-            height: 150px;
-            background: #ddd;
-            border-radius: var(--border-radius);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-        }
-        
-        /* المساعد الصحي */
-        .chat-container {
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            margin: 15px 0;
-        }
-        
-        .chat-messages {
-            height: 300px;
-            overflow-y: auto;
-            padding: 15px;
-            background: #f9f9f9;
-        }
-        
-        body.dark-mode .chat-messages {
-            background: #2d2d2d;
-        }
-        
-        .chat-message {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: var(--border-radius);
-            max-width: 80%;
-        }
-        
-        .user-message {
-            background: var(--primary-blue);
-            color: white;
-            margin-left: auto;
-        }
-        
-        .bot-message {
-            background: #e9ecef;
-            color: #333;
-        }
-        
-        .chat-input {
-            display: flex;
-            padding: 10px;
-            background: white;
-            border-top: 1px solid #ddd;
-        }
-        
-        .chat-input input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-        
-        .chat-input button {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        /* جودة النوم */
-        .sleep-tracker {
-            background: #4a5568;
-            color: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-        }
-        
-        .sleep-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            text-align: center;
-            margin: 15px 0;
-        }
-        
-        /* مؤشر الإجهاد الحراري */
-        .heat-stress {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            padding: 20px;
-            border-radius: var(--border-radius);
-            margin: 15px 0;
-        }
-        
-        .heat-level {
-            font-size: 2em;
-            font-weight: bold;
-            text-align: center;
-        }
-        
-        /* تقارير PDF */
-        .report-section {
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .pdf-button {
-            background: var(--danger-red);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 1.1em;
-            margin: 10px;
-        }
-        
-        /* مزامنة الأجهزة */
-        .device-sync {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
-        
-        .device-btn {
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        /* زر الطوارئ */
-        .emergency-btn {
-            background: var(--danger-red);
-            color: white;
-            border: none;
-            padding: 20px;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 20px auto;
-            display: block;
-            animation: emergencyPulse 1.5s infinite;
-        }
-        
-        @keyframes emergencyPulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
-        }
-        
-        /* تعدد اللغات */
-        .language-selector {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-        
-        @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .timeline {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .time-point {
-                width: 70px;
-                height: 70px;
-                font-size: 0.9em;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroRadar | Dr. Madeh Gado</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   DESIGN SYSTEM — DARK HIGH-CONTRAST THEME
+   ══════════════════════════════════════════ */
+:root {
+  --bg:      #0d1117;
+  --bg2:     #161b24;
+  --bg3:     #1c2330;
+  --surface: #1e2636;
+  --teal:    #00e5c8;
+  --teal-dk: #00a896;
+  --gold:    #ffc840;
+  --gold-dk: #cc9d00;
+  --red:     #ff5577;
+  --blue:    #5ba3ff;
+  --purple:  #b57bff;
+  --text-primary:   #f0f4ff;
+  --text-secondary: #a8b8d0;
+  --text-muted:     #6b7e96;
+  --border:      rgba(255,255,255,0.08);
+  --border-teal: rgba(0,229,200,0.30);
+  --border-gold: rgba(255,200,64,0.30);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(ellipse 60% 50% at 10% 20%, rgba(0,229,200,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 80%, rgba(255,200,64,0.05) 0%, transparent 60%);
+}
+
+/* ── HEADER ── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,17,23,0.96);
+  border-bottom: 1px solid var(--border-teal);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.header-inner {
+  max-width: 1140px; margin: 0 auto;
+  padding: 14px 24px;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 16px;
+}
+.logo { display:flex; align-items:center; gap:12px; }
+.logo-icon {
+  width:44px; height:44px; border-radius:12px; flex-shrink:0;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dk));
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; box-shadow: 0 0 20px rgba(0,229,200,0.4);
+}
+.logo-text { font-size:22px; font-weight:900; color:var(--text-primary); letter-spacing:-0.5px; line-height:1.1; }
+.logo-text span { color:var(--teal); }
+.logo-sub { font-size:10px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; letter-spacing:1.5px; margin-top:2px; }
+.header-right { display:flex; align-items:center; gap:14px; flex-shrink:0; }
+.live-badge {
+  display:flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
+  background:rgba(255,85,119,0.15); border:1px solid rgba(255,85,119,0.5);
+  font-size:11px; font-weight:700; color:#ff9aaa;
+  font-family:'JetBrains Mono',monospace; letter-spacing:1.5px;
+}
+.live-dot { width:7px; height:7px; border-radius:50%; background:var(--red); animation:blink 1.2s ease-in-out infinite; }
+#clock { font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:700; color:var(--teal); letter-spacing:1px; white-space:nowrap; }
+
+/* ── HERO ── */
+.hero-bar { text-align:center; padding:44px 24px 32px; }
+.hero-date { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold); letter-spacing:3px; text-transform:uppercase; margin-bottom:12px; }
+.hero-title { font-size:36px; font-weight:900; color:var(--text-primary); margin-bottom:8px; line-height:1.2; }
+.hero-title span { color:var(--teal); }
+.hero-sub { font-size:14px; color:var(--text-secondary); }
+
+/* ── TOOLS ── */
+.tools-strip { max-width:1140px; margin:0 auto 32px; padding:0 24px; }
+.tools-label { font-size:10px; font-weight:700; color:var(--text-muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; font-family:'JetBrains Mono',monospace; }
+.tools-row { display:flex; gap:8px; flex-wrap:wrap; }
+.tool-chip {
+  display:inline-flex; align-items:center; padding:7px 15px; border-radius:8px;
+  background:var(--bg2); border:1px solid var(--border-teal);
+  color:var(--teal); text-decoration:none;
+  font-size:12px; font-weight:700; font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.5px; transition:all 0.2s ease; white-space:nowrap;
+}
+.tool-chip:hover { background:rgba(0,229,200,0.12); border-color:var(--teal); color:#fff; transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,229,200,0.2); }
+
+/* ── MAIN GRID ── */
+.main { max-width:1140px; margin:0 auto; padding:0 24px 80px; display:grid; grid-template-columns:1fr 360px; gap:24px; }
+
+/* ── SEC HEADER ── */
+.sec-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.sec-title { font-size:11px; font-weight:700; letter-spacing:2.5px; color:var(--gold); text-transform:uppercase; font-family:'JetBrains Mono',monospace; display:flex; align-items:center; gap:8px; }
+.sec-title::before { content:''; width:3px; height:14px; background:var(--gold); border-radius:2px; flex-shrink:0; }
+
+/* ── NEWS CARDS ── */
+.news-grid { display:flex; flex-direction:column; gap:14px; }
+.news-card {
+  background:var(--bg2); border:1px solid var(--border); border-radius:16px;
+  padding:22px; transition:all 0.3s ease; animation:fadeIn 0.5s ease both;
+  position:relative; overflow:hidden;
+}
+.news-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:linear-gradient(90deg,var(--teal),transparent); opacity:0; transition:opacity 0.3s; }
+.news-card:hover { border-color:var(--border-teal); transform:translateY(-3px); box-shadow:0 16px 48px rgba(0,0,0,0.5),0 0 0 1px rgba(0,229,200,0.1); }
+.news-card:hover::before { opacity:1; }
+.news-card.gold-accent::before { background:linear-gradient(90deg,var(--gold),transparent); }
+.news-card.gold-accent:hover { border-color:var(--border-gold); }
+.card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.source-badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:6px; font-size:11px; font-weight:700; font-family:'JetBrains Mono',monospace; letter-spacing:0.5px; flex-shrink:0; }
+.badge-teal { background:rgba(0,229,200,0.15); color:var(--teal);   border:1px solid rgba(0,229,200,0.40); }
+.badge-gold { background:rgba(255,200,64,0.15); color:var(--gold);   border:1px solid rgba(255,200,64,0.40); }
+.badge-blue { background:rgba(91,163,255,0.15); color:var(--blue);   border:1px solid rgba(91,163,255,0.40); }
+.badge-red  { background:rgba(255,85,119,0.15); color:#ff9aaa;       border:1px solid rgba(255,85,119,0.40); }
+.card-title { font-size:16px; font-weight:700; color:var(--text-primary); line-height:1.5; margin-bottom:8px; }
+.card-desc  { font-size:14px; color:var(--text-secondary); line-height:1.7; margin-bottom:16px; }
+.card-actions { display:flex; gap:8px; flex-wrap:wrap; }
+.act-btn { display:inline-flex; align-items:center; gap:5px; padding:8px 14px; border-radius:8px; font-family:'Cairo',sans-serif; font-size:13px; font-weight:700; border:none; cursor:pointer; text-decoration:none; transition:all 0.2s ease; }
+.btn-open { background:var(--bg3); color:var(--text-secondary); border:1px solid var(--border); }
+.btn-open:hover { background:var(--surface); color:var(--text-primary); border-color:rgba(255,255,255,0.2); }
+.btn-ai   { background:rgba(255,200,64,0.12); color:var(--gold); border:1px solid rgba(255,200,64,0.35); }
+.btn-ai:hover { background:rgba(255,200,64,0.22); color:#fff; transform:translateY(-1px); }
+.btn-share { background:linear-gradient(135deg,#1a7a45,#128c7e); color:#fff; border:none; }
+.btn-share:hover { opacity:0.88; transform:translateY(-1px); }
+.ai-summary { display:none; margin-top:14px; padding:14px; background:rgba(255,200,64,0.06); border:1px solid rgba(255,200,64,0.20); border-radius:10px; font-size:14px; color:var(--text-secondary); line-height:1.8; animation:fadeIn 0.3s ease; }
+.ai-summary.visible { display:block; }
+.ai-header { font-size:11px; font-weight:700; color:var(--gold); letter-spacing:1px; text-transform:uppercase; font-family:'JetBrains Mono',monospace; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.typing-cursor::after { content:'▋'; animation:blink 0.8s infinite; color:var(--gold); }
+
+/* ── SIDEBAR ── */
+.sidebar { display:flex; flex-direction:column; gap:20px; }
+.side-card { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:18px; animation:fadeIn 0.5s ease both; }
+.calc-list { display:flex; flex-direction:column; gap:7px; }
+.calc-item { display:flex; align-items:center; justify-content:space-between; padding:10px 13px; background:var(--bg3); border:1px solid var(--border); border-radius:10px; text-decoration:none; transition:all 0.2s ease; }
+.calc-item:hover { background:rgba(0,229,200,0.08); border-color:var(--border-teal); transform:translateX(3px); }
+.calc-name  { font-size:14px; font-weight:700; color:var(--text-primary); }
+.calc-desc  { font-size:11px; color:var(--text-muted); margin-top:2px; }
+.calc-arrow { color:var(--teal); font-size:15px; font-weight:700; }
+.guide-list { display:flex; flex-direction:column; gap:7px; }
+.guide-item { display:flex; align-items:center; gap:10px; padding:10px 13px; background:var(--bg3); border:1px solid var(--border); border-radius:10px; text-decoration:none; transition:all 0.2s ease; }
+.guide-item:hover { border-color:var(--border-gold); background:rgba(255,200,64,0.06); transform:translateX(3px); }
+.guide-dot  { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.guide-text { font-size:13px; font-weight:600; color:var(--text-primary); }
+.guide-org  { font-size:11px; color:var(--text-muted); margin-top:1px; }
+.src-btn { padding:5px 13px; border-radius:20px; border:1px solid var(--border); background:var(--bg3); color:var(--text-muted); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.2s ease; letter-spacing:0.5px; }
+.src-btn:hover,.src-btn.active { background:rgba(0,229,200,0.12); border-color:var(--border-teal); color:var(--teal); }
+
+/* ══ TV NEWS SCREEN ══ */
+.tv-screen {
+  border-radius:12px; overflow:hidden;
+  background:#020508;
+  border:2px solid var(--teal-dk);
+  box-shadow: 0 0 0 1px rgba(0,229,200,0.12), 0 0 32px rgba(0,229,200,0.12), 0 8px 40px rgba(0,0,0,0.8);
+}
+.tv-banner {
+  display:flex; align-items:center; justify-content:space-between;
+  background:linear-gradient(90deg,#003d36,#004d40);
+  padding:8px 14px; border-bottom:1px solid rgba(0,229,200,0.25);
+}
+.tv-banner-left { display:flex; align-items:center; gap:8px; }
+.tv-live-dot { width:9px; height:9px; border-radius:50%; background:var(--red); box-shadow:0 0 8px var(--red); animation:blink 1s infinite; flex-shrink:0; }
+.tv-channel-name { color:#fff; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; letter-spacing:2px; }
+.tv-source-id    { color:rgba(255,255,255,0.7); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:1px; }
+.tv-viewport {
+  padding:18px 18px 14px; min-height:220px; position:relative; overflow:hidden;
+}
+.tv-viewport::after {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:3;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,200,0.018) 2px,rgba(0,255,200,0.018) 4px);
+}
+.tv-meta { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; position:relative; z-index:2; }
+.tv-badge-row { display:flex; align-items:center; gap:8px; }
+.tv-num { background:linear-gradient(135deg,#cc1133,#880022); color:#fff; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:1px; padding:3px 9px; border-radius:5px; white-space:nowrap; }
+.tv-date-tag { color:var(--teal); font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; }
+.tv-dots { display:flex; gap:4px; align-items:center; }
+.tv-headline { font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; color:#ffffff; line-height:1.5; margin-bottom:12px; position:relative; z-index:2; text-shadow:0 0 40px rgba(0,229,200,0.2); min-height:48px; }
+.tv-desc { font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.7; color:rgba(185,210,240,0.92); border-left:2px solid var(--teal-dk); padding-left:10px; position:relative; z-index:2; min-height:36px; }
+.tv-advance-track { height:3px; border-radius:2px; background:rgba(255,255,255,0.07); margin-top:16px; overflow:hidden; position:relative; z-index:2; }
+.tv-advance-fill  { height:100%; width:0%; background:linear-gradient(90deg,var(--teal),var(--gold)); border-radius:2px; }
+.tv-ticker-bar { display:flex; align-items:center; background:#04080f; border-top:1px solid rgba(0,229,200,0.2); height:32px; overflow:hidden; }
+.tv-ticker-label { flex-shrink:0; background:linear-gradient(135deg,#cc1133,#880022); height:100%; padding:0 12px; display:flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:#fff; letter-spacing:2px; white-space:nowrap; }
+.tv-ticker-track { flex:1; overflow:hidden; position:relative; }
+#tv-ticker { display:inline-block; white-space:nowrap; color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.3px; padding-left:40px; animation:tickerScroll 50s linear infinite; }
+
+/* ── REFRESH BAR ── */
+.refresh-track { margin-top:8px; background:rgba(255,255,255,0.06); border-radius:6px; height:4px; overflow:hidden; }
+.refresh-fill  { height:100%; width:100%; background:linear-gradient(90deg,var(--teal),var(--gold)); border-radius:6px; }
+
+/* ── CTRL BUTTONS ── */
+.ctrl-btn { flex:1; padding:10px; border-radius:9px; cursor:pointer; font-family:'Cairo',sans-serif; font-size:13px; font-weight:700; transition:all 0.2s ease; }
+.ctrl-refresh { background:rgba(0,229,200,0.10); border:1px solid var(--border-teal); color:var(--teal); }
+.ctrl-refresh:hover { background:rgba(0,229,200,0.20); color:#fff; }
+.ctrl-share { flex:2; background:linear-gradient(135deg,#1a7a45,#0f7a6a); border:none; color:#fff; }
+.ctrl-share:hover { opacity:0.88; }
+
+/* ── FOOTER ── */
+footer { text-align:center; padding:20px 24px; border-top:1px solid var(--border); font-size:12px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; letter-spacing:1px; }
+
+/* ── ANIMATIONS ── */
+@keyframes blink   { 0%,100%{opacity:1;} 50%{opacity:0.15;} }
+@keyframes fadeIn  { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+@keyframes tvSlide { from{opacity:0;transform:translateY(8px);}  to{opacity:1;transform:translateY(0);} }
+@keyframes tickerScroll { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+.news-card:nth-child(1){animation-delay:0.05s;} .news-card:nth-child(2){animation-delay:0.10s;}
+.news-card:nth-child(3){animation-delay:0.15s;} .news-card:nth-child(4){animation-delay:0.20s;}
+.news-card:nth-child(5){animation-delay:0.25s;} .news-card:nth-child(6){animation-delay:0.30s;}
+.news-card:nth-child(7){animation-delay:0.35s;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){ .main{grid-template-columns:1fr;} .sidebar{order:-1;} .hero-title{font-size:26px;} }
+@media(max-width:600px){ .header-inner{padding:12px 16px;} .main,.tools-strip{padding-left:16px;padding-right:16px;} .hero-bar{padding:28px 16px 20px;} .hero-title{font-size:22px;} #clock{display:none;} }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 الوضع الليلي</button>
-        <select class="language-selector" onchange="changeLanguage(this.value)">
-            <option value="ar">🇸🇦 العربية</option>
-            <option value="en">🇬🇧 English</option>
-            <option value="fr">🇫🇷 Français</option>
-        </select>
-        <h1 id="main-title">🌙 بروتوكول رمضان 2026 - النظام الصحي الذكي</h1>
-        <p id="sub-title">د. مادح محمد | مقاومة أنسولين 9.6 | BMI 45.5</p>
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🧠</div>
+      <div>
+        <div class="logo-text">Neuro<span>Radar</span></div>
+        <div class="logo-sub">DR. MADEH GADO · NEUROLOGY · MANSOURA</div>
+      </div>
     </div>
-
-    <!-- الخط الزمني -->
-    <div class="section">
-        <div class="section-title">⏰ الخط الزمني اليومي</div>
-        <div class="timeline">
-            <div class="time-point" data-time="6:00">6:00 م<br>كسر الصيام</div>
-            <div class="time-point" data-time="6:45">6:45 م<br>الإفطار</div>
-            <div class="time-point" data-time="9:00">9:00 م<br>المشي</div>
-            <div class="time-point" data-time="2:00">2:00 ص<br>السحور</div>
-        </div>
+    <div class="header-right">
+      <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+      <div id="clock">--:--:--</div>
     </div>
+  </div>
+</header>
 
-    <!-- مؤقت زمني -->
-    <div class="section">
-        <div class="section-title">⏲️ مؤقت فترة الانتظار (45 دقيقة)</div>
-        <div class="timer-container">
-            <div class="timer-display" id="timer">45:00</div>
-            <div class="timer-controls">
-                <button onclick="startTimer()">▶️ بدء</button>
-                <button onclick="pauseTimer()">⏸️ إيقاف مؤقت</button>
-                <button onclick="resetTimer()">🔄 إعادة</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- المؤشرات الحيوية -->
-    <div class="section">
-        <div class="section-title">📊 المؤشرات الحيوية</div>
-        <div class="vital-grid">
-            <div class="vital-card">
-                <label>نسبة السكر (mg/dL)</label>
-                <input type="number" id="sugar-level" onchange="updateHealthData()">
-            </div>
-            <div class="vital-card">
-                <label>الوزن (كجم)</label>
-                <input type="number" id="weight" onchange="updateWaterNeeded()">
-            </div>
-            <div class="vital-card">
-                <label>ضغط الدم</label>
-                <input type="text" id="blood-pressure">
-            </div>
-            <div class="vital-card">
-                <label>النشاط (دقائق)</label>
-                <input type="number" id="activity" onchange="updateProgress()">
-            </div>
-            <div class="vital-card">
-                <label>جودة النوم</label>
-                <select id="sleep-quality">
-                    <option value="ممتاز">ممتاز</option>
-                    <option value="جيد">جيد</option>
-                    <option value="مقبول">مقبول</option>
-                    <option value="سيء">سيء</option>
-                </select>
-            </div>
-            <div class="vital-card">
-                <label>درجة الحرارة المحيطة</label>
-                <input type="number" id="temperature" onchange="updateHeatStress()">
-            </div>
-        </div>
-    </div>
-
-    <!-- أشرطة التقدم -->
-    <div class="section">
-        <div class="section-title">📈 تقدم الأهداف</div>
-        <div class="progress-container" id="water-progress">
-            <div style="display: flex; justify-content: space-between;">
-                <span>شرب الماء</span>
-                <span id="water-percent">0%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="water-fill" style="width: 0%;">0 لتر</div>
-            </div>
-        </div>
-        
-        <div class="progress-container" id="activity-progress">
-            <div style="display: flex; justify-content: space-between;">
-                <span>النشاط البدني</span>
-                <span id="activity-percent">0%</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="activity-fill" style="width: 0%;">0 دقيقة</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- رسم بياني -->
-    <div class="section">
-        <div class="section-title">📉 تطور السكر (آخر 7 أيام)</div>
-        <div class="chart-container">
-            <div class="mini-chart" id="sugar-chart"></div>
-        </div>
-    </div>
-
-    <!-- نظام النقاط والشارات -->
-    <div class="section">
-        <div class="section-title">🏆 نظام التحفيز</div>
-        <div class="points-system">
-            <div>نقاط الالتزام</div>
-            <div class="points-display" id="points">1500</div>
-        </div>
-        
-        <div class="badges-container" id="badges">
-            <div class="badge earned" onclick="showBadgeInfo('الانتظام')">⭐ الانتظام 7 أيام</div>
-            <div class="badge" onclick="showBadgeInfo('الماء')">💧 شرب الماء</div>
-            <div class="badge" onclick="showBadgeInfo('الرياضة')">🏃 المشي اليومي</div>
-            <div class="badge earned" onclick="showBadgeInfo('الدواء')">💊 الالتزام بالدواء</div>
-            <div class="badge" onclick="showBadgeInfo('النوم')">😴 نوم صحي</div>
-        </div>
-    </div>
-
-    <!-- توصيات ذكية -->
-    <div class="section">
-        <div class="section-title">🤖 توصيات الذكاء الاصطناعي</div>
-        <div class="recommendation-box" id="ai-recommendation">
-            <strong>بناء على قراءات اليوم:</strong>
-            <p id="recommendation-text">نسبة السكر مرتفعة قليلاً. يفضل تقليل الكربوهيدرات في وجبة الإفطار وزيادة كمية الخضروات.</p>
-        </div>
-    </div>
-
-    <!-- وصفات مقترحة -->
-    <div class="section">
-        <div class="section-title">🥗 وصفات مقترحة</div>
-        <div class="grid-container" id="recipes">
-            <div class="recipe-card">
-                <div class="recipe-image">🍳</div>
-                <h3>عجة البيض بالخضار</h3>
-                <p>بيض + فلفل ألوان + سبانخ + زيت زيتون</p>
-                <p><strong>السعرات:</strong> 280 سعرة</p>
-                <button onclick="saveMeal(this)">📸 تسجيل الوجبة</button>
-            </div>
-            <div class="recipe-card">
-                <div class="recipe-image">🐟</div>
-                <h3>سمك مشوي بالخضار</h3>
-                <p>سمك + كوسا + جزر + بهارات</p>
-                <p><strong>السعرات:</strong> 350 سعرة</p>
-                <button onclick="saveMeal(this)">📸 تسجيل الوجبة</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- مساعد صحي -->
-    <div class="section">
-        <div class="section-title">💬 المساعد الصحي</div>
-        <div class="chat-container">
-            <div class="chat-messages" id="chat-messages">
-                <div class="chat-message bot-message">مرحباً! كيف يمكنني مساعدتك اليوم؟</div>
-            </div>
-            <div class="chat-input">
-                <input type="text" id="chat-input" placeholder="اكتب سؤالك..." onkeypress="if(event.key==='Enter') sendMessage()">
-                <button onclick="sendMessage()">إرسال</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- تتبع النوم -->
-    <div class="section">
-        <div class="section-title">😴 تتبع النوم</div>
-        <div class="sleep-tracker">
-            <div class="sleep-stats">
-                <div>
-                    <div>⏰ المدة</div>
-                    <div><input type="number" id="sleep-hours" min="0" max="24" step="0.5" value="7" onchange="updateSleepStats()"> ساعة</div>
-                </div>
-                <div>
-                    <div>💤 عميق</div>
-                    <div><input type="number" id="deep-sleep" min="0" max="24" step="0.5" value="2" onchange="updateSleepStats()"> ساعة</div>
-                </div>
-                <div>
-                    <div>🔄 الاستيقاظ</div>
-                    <div><input type="number" id="wake-ups" min="0" value="2" onchange="updateSleepStats()"> مرة</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- مؤشر الإجهاد الحراري -->
-    <div class="section">
-        <div class="section-title">🌡️ مؤشر الإجهاد الحراري</div>
-        <div class="heat-stress">
-            <div class="heat-level" id="heat-stress-level">منخفض</div>
-            <div>نصائح: اشرب الماء بانتظام، تجنب التعرض المباشر للشمس</div>
-        </div>
-    </div>
-
-    <!-- مزامنة الأجهزة -->
-    <div class="section">
-        <div class="section-title">🔄 مزامنة الأجهزة</div>
-        <div class="device-sync">
-            <button class="device-btn" onclick="syncDevice('apple')">🍎 Apple Health</button>
-            <button class="device-btn" onclick="syncDevice('samsung')">📱 Samsung Health</button>
-            <button class="device-btn" onclick="syncDevice('fitbit')">⌚ Fitbit</button>
-            <button class="device-btn" onclick="syncDevice('glucose')">💉 جهاز السكر</button>
-        </div>
-    </div>
-
-    <!-- تقارير PDF -->
-    <div class="section report-section">
-        <div class="section-title">📋 التقارير</div>
-        <button class="pdf-button" onclick="generatePDF()">📥 تحميل تقرير الأسبوع PDF</button>
-        <button class="pdf-button" onclick="shareWithDoctor()">👨‍⚕️ مشاركة مع الطبيب</button>
-    </div>
-
-    <!-- زر الطوارئ -->
-    <button class="emergency-btn" onclick="emergencyCall()">🚨 طوارئ</button>
-
-    <!-- النسخ الاحتياطي -->
-    <div class="section">
-        <div class="section-title">💾 النسخ الاحتياطي</div>
-        <div style="text-align: center; margin: 10px 0;">
-            <button onclick="backupData()">📤 نسخ احتياطي</button>
-            <button onclick="restoreData()">📥 استعادة البيانات</button>
-        </div>
-    </div>
-
-    <!-- أمان إضافي -->
-    <div class="section">
-        <div class="section-title">🔒 الأمان والخصوصية</div>
-        <div style="display: flex; gap: 10px; justify-content: center;">
-            <button onclick="enableFingerprint()">👆 تفعيل البصمة</button>
-            <button onclick="encryptData()">🔐 تشفير البيانات</button>
-        </div>
-    </div>
-
-    <!-- خاتمة -->
-    <div class="footer">
-        <p>تم تطويره بتقنيات الذكاء الاصطناعي - جميع الحقوق محفوظة © 2026</p>
-        <p id="last-sync">آخر مزامنة: <span id="sync-time">الآن</span></p>
-    </div>
+<!-- HERO -->
+<div class="hero-bar">
+  <div class="hero-date" id="hero-date">LOADING DATE...</div>
+  <h1 class="hero-title">Morning <span>Neuro</span> Briefing</h1>
+  <p class="hero-sub">Curated journals &middot; Clinical calculators &middot; AI summaries</p>
 </div>
 
-<script>
-    // ==================== متغيرات عامة ====================
-    let timerInterval;
-    let timerSeconds = 2700; // 45 دقيقة
-    let points = 1500;
-    let language = 'ar';
-    
-    // ==================== الترجمات ====================
-    const translations = {
-        ar: {
-            mainTitle: "🌙 بروتوكول رمضان 2026 - النظام الصحي الذكي",
-            darkMode: "🌙 الوضع الليلي",
-            emergency: "🚨 طوارئ"
-        },
-        en: {
-            mainTitle: "🌙 Ramadan 2026 Protocol - Smart Health System",
-            darkMode: "🌙 Dark Mode",
-            emergency: "🚨 Emergency"
-        },
-        fr: {
-            mainTitle: "🌙 Protocole Ramadan 2026 - Système de Santé Intelligent",
-            darkMode: "🌙 Mode Nuit",
-            emergency: "🚨 Urgence"
-        }
-    };
-    
-    // ==================== الوضع الليلي ====================
-    function toggleDarkMode() {
-        document.body.classList.toggle('dark-mode');
-        const btn = document.querySelector('.dark-mode-toggle');
-        btn.textContent = document.body.classList.contains('dark-mode') ? '☀️ الوضع النهاري' : '🌙 الوضع الليلي';
-    }
-    
-    // ==================== تغيير اللغة ====================
-    function changeLanguage(lang) {
-        language = lang;
-        document.getElementById('main-title').textContent = translations[lang].mainTitle;
-        // يمكن إضافة المزيد من الترجمات هنا
-    }
-    
-    // ==================== المؤقت ====================
-    function startTimer() {
-        if (timerInterval) clearInterval(timerInterval);
-        timerInterval = setInterval(() => {
-            if (timerSeconds > 0) {
-                timerSeconds--;
-                updateTimerDisplay();
-                
-                // تنبيه عند انتهاء المدة
-                if (timerSeconds === 0) {
-                    alert('✅ انتهت فترة الانتظار! يمكنك تناول الطعام الآن');
-                    playNotification();
-                }
-            }
-        }, 1000);
-    }
-    
-    function pauseTimer() {
-        clearInterval(timerInterval);
-    }
-    
-    function resetTimer() {
-        clearInterval(timerInterval);
-        timerSeconds = 2700;
-        updateTimerDisplay();
-    }
-    
-    function updateTimerDisplay() {
-        const minutes = Math.floor(timerSeconds / 60);
-        const seconds = timerSeconds % 60;
-        document.getElementById('timer').textContent = 
-            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
-    
-    // ==================== تحديث التقدم ====================
-    function updateProgress() {
-        const activity = parseInt(document.getElementById('activity').value) || 0;
-        const targetActivity = 45;
-        const activityPercent = Math.min((activity / targetActivity) * 100, 100);
-        
-        document.getElementById('activity-fill').style.width = activityPercent + '%';
-        document.getElementById('activity-fill').textContent = activity + ' دقيقة';
-        document.getElementById('activity-percent').textContent = Math.round(activityPercent) + '%';
-        
-        // تحديث النقاط
-        if (activity >= targetActivity) {
-            addPoints(50);
-        }
-    }
-    
-    function updateWaterNeeded() {
-        const weight = parseFloat(document.getElementById('weight').value) || 130;
-        const waterNeeded = (weight * 0.033).toFixed(1); // 33 مل لكل كجم
-        
-        const waterProgress = document.querySelector('#water-progress .progress-fill');
-        const waterPercent = document.getElementById('water-percent');
-        
-        // نفترض أن المستخدم أدخل كمية الماء التي شربها
-        const waterDrank = waterNeeded * 0.7; // 70% افتراضياً
-        
-        const percent = (waterDrank / waterNeeded) * 100;
-        waterProgress.style.width = percent + '%';
-        waterProgress.textContent = waterDrank.toFixed(1) + '/' + waterNeeded + ' لتر';
-        waterPercent.textContent = Math.round(percent) + '%';
-    }
-    
-    // ==================== تحديث الرسم البياني ====================
-    function updateChart() {
-        const chart = document.getElementById('sugar-chart');
-        chart.innerHTML = '';
-        
-        // بيانات تجريبية
-        const sugarLevels = [145, 138, 156, 149, 152, 140, 135];
-        const days = ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
-        
-        sugarLevels.forEach((level, index) => {
-            const bar = document.createElement('div');
-            bar.className = 'chart-bar';
-            bar.style.height = (level / 2) + 'px';
-            bar.setAttribute('data-value', level);
-            chart.appendChild(bar);
-            
-            const label = document.createElement('div');
-            label.className = 'chart-label';
-            label.textContent = days[index].substring(0, 2);
-            bar.appendChild(label);
-        });
-    }
-    
-    // ==================== نظام النقاط ====================
-    function addPoints(pointsToAdd) {
-        points += pointsToAdd;
-        document.getElementById('points').textContent = points;
-        
-        // التحقق من الشارات
-        checkBadges();
-    }
-    
-    function checkBadges() {
-        if (points >= 2000) {
-            earnBadge('الانتظام');
-        }
-        // المزيد من الشروط...
-    }
-    
-    function earnBadge(badgeName) {
-        const badges = document.querySelectorAll('.badge');
-        badges.forEach(badge => {
-            if (badge.textContent.includes(badgeName)) {
-                badge.classList.add('earned');
-                playNotification();
-            }
-        });
-    }
-    
-    function showBadgeInfo(badgeName) {
-        alert(`شارة ${badgeName}: تحصل عليها عند الالتزام بهذا النشاط لمدة أسبوع`);
-    }
-    
-    // ==================== المساعد الصحي ====================
-    function sendMessage() {
-        const input = document.getElementById('chat-input');
-        const message = input.value.trim();
-        if (!message) return;
-        
-        const chatMessages = document.getElementById('chat-messages');
-        
-        // رسالة المستخدم
-        const userDiv = document.createElement('div');
-        userDiv.className = 'chat-message user-message';
-        userDiv.textContent = message;
-        chatMessages.appendChild(userDiv);
-        
-        // رد المساعد
-        setTimeout(() => {
-            const botDiv = document.createElement('div');
-            botDiv.className = 'chat-message bot-message';
-            botDiv.textContent = getBotResponse(message);
-            chatMessages.appendChild(botDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }, 500);
-        
-        input.value = '';
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    
-    function getBotResponse(message) {
-        const responses = {
-            'سكر': 'يجب أن يكون مستوى السكر بين 80-130 قبل الأكل وأقل من 180 بعد الأكل بساعتين',
-            'دواء': 'تناول Euthyrox الساعة 6:00 والميتفورمين مع الأكل 6:45',
-            'وزن': 'هدفنا إنقاص 5-7 كجم هذا الشهر. استمر في الالتزام',
-            'اكل': 'ركز على البروتين والخضروات وتجنب السكريات والنشويات'
-        };
-        
-        for (let key in responses) {
-            if (message.includes(key)) {
-                return responses[key];
-            }
-        }
-        
-        return 'شكراً لسؤالك. أنا هنا لمساعدتك في متابعة حالتك الصحية. هل تريد معرفة المزيد عن نظامك الغذائي أو الدواء؟';
-    }
-    
-    // ==================== تحديث إجهاد حراري ====================
-    function updateHeatStress() {
-        const temp = parseFloat(document.getElementById('temperature').value) || 25;
-        const heatLevel = document.getElementById('heat-stress-level');
-        
-        if (temp > 35) {
-            heatLevel.textContent = 'مرتفع جداً - خطر';
-            heatLevel.style.color = '#ff6b6b';
-        } else if (temp > 30) {
-            heatLevel.textContent = 'مرتفع';
-            heatLevel.style.color = '#f39c12';
-        } else if (temp > 25) {
-            heatLevel.textContent = 'متوسط';
-            heatLevel.style.color = '#f1c40f';
-        } else {
-            heatLevel.textContent = 'منخفض - آمن';
-            heatLevel.style.color = '#2ecc71';
-        }
-    }
-    
-    // ==================== تحديث بيانات النوم ====================
-    function updateSleepStats() {
-        const hours = document.getElementById('sleep-hours').value;
-        const deep = document.getElementById('deep-sleep').value;
-        const wakes = document.getElementById('wake-ups').value;
-        
-        // توصية ذكية بناءً على جودة النوم
-        if (hours < 6) {
-            showRecommendation('نومك قليل جداً. حاول النوم مبكراً لتحسين حساسية الأنسولين');
-        } else if (deep < 1.5) {
-            showRecommendation('النوم العميق قليل. جرب تقنيات الاسترخاء قبل النوم');
-        }
-    }
-    
-    // ==================== توصيات ذكية ====================
-    function showRecommendation(text) {
-        document.getElementById('recommendation-text').textContent = text;
-    }
-    
-    function updateHealthData() {
-        const sugar = parseFloat(document.getElementById('sugar-level').value);
-        
-        if (sugar > 180) {
-            showRecommendation('⚠️ ارتفاع في السكر. تأكد من جرعة الدواء وقلل الكربوهيدرات');
-            addPoints(-50); // خصم نقاط
-        } else if (sugar < 70) {
-            showRecommendation('🚨 انخفاض السكر! تناول مصدر سكر سريع فوراً');
-            emergencyCall();
-        } else {
-            showRecommendation('مستوى السكر ممتاز. استمر في الالتزام');
-            addPoints(100);
-        }
-    }
-    
-    // ==================== تسجيل الوجبات ====================
-    function saveMeal(button) {
-        const recipe = button.parentElement;
-        const recipeName = recipe.querySelector('h3').textContent;
-        
-        // محاكاة تصوير
-        alert(`تم تسجيل وجبة ${recipeName}`);
-        addPoints(30);
-    }
-    
-    // ==================== مزامنة الأجهزة ====================
-    function syncDevice(device) {
-        document.getElementById('sync-time').textContent = new Date().toLocaleTimeString();
-        
-        const messages = {
-            'apple': 'تمت المزامنة مع Apple Health بنجاح',
-            'samsung': 'تمت المزامنة مع Samsung Health بنجاح',
-            'fitbit': 'تمت المزامنة مع Fitbit بنجاح',
-            'glucose': 'تم استيراد قراءات السكر من الجهاز'
-        };
-        
-        alert(messages[device]);
-    }
-    
-    // ==================== تقارير PDF ====================
-    function generatePDF() {
-        alert('جاري تحضير تقرير الأسبوع...');
-        
-        // محاكاة إنشاء PDF
-        setTimeout(() => {
-            alert('✅ تم تحميل التقرير بنجاح');
-            addPoints(200);
-        }, 2000);
-    }
-    
-    function shareWithDoctor() {
-        alert('تم إرسال التقرير إلى عيادة الدكتور مادح محمد');
-    }
-    
-    // ==================== زر الطوارئ ====================
-    function emergencyCall() {
-        if (confirm('هل تريد الاتصال بالطوارئ الطبية؟')) {
-            window.location.href = 'tel:997';
-        }
-    }
-    
-    // ==================== النسخ الاحتياطي ====================
-    function backupData() {
-        const data = {
-            sugar: document.getElementById('sugar-level').value,
-            weight: document.getElementById('weight').value,
-            points: points,
-            timestamp: new Date()
-        };
-        
-        localStorage.setItem('healthData', JSON.stringify(data));
-        alert('تم حفظ البيانات في السحابة');
-    }
-    
-    function restoreData() {
-        const data = localStorage.getItem('healthData');
-        if (data) {
-            const parsed = JSON.parse(data);
-            document.getElementById('sugar-level').value = parsed.sugar;
-            document.getElementById('weight').value = parsed.weight;
-            points = parsed.points;
-            document.getElementById('points').textContent = points;
-            alert('تم استعادة البيانات بنجاح');
-        }
-    }
-    
-    // ==================== الأمان ====================
-    function enableFingerprint() {
-        if (window.PublicKeyCredential) {
-            alert('تم تفعيل الدخول بالبصمة');
-        } else {
-            alert('جهازك لا يدعم البصمة، يمكن استخدام رمز PIN');
-        }
-    }
-    
-    function encryptData() {
-        alert('جميع بياناتك مشفرة وآمنة');
-    }
-    
-    // ==================== الإشعارات ====================
-    function playNotification() {
-        // محاكاة صوت إشعار
-        console.log('🔔 Notification');
-        
-        // إظهار إشعار في المتصفح
-        if (Notification.permission === 'granted') {
-            new Notification('تذكير صحي', {
-                body: 'حان وقت المتابعة',
-                icon: '🔔'
-            });
-        }
-    }
-    
-    // ==================== طلب إذن الإشعارات ====================
-    if (Notification.permission !== 'granted') {
-        Notification.requestPermission();
-    }
-    
-    // ==================== التنبؤ بالذكاء الاصطناعي ====================
-    function predictFutureSugar() {
-        const currentSugar = parseFloat(document.getElementById('sugar-level').value) || 140;
-        const activity = parseFloat(document.getElementById('activity').value) || 0;
-        const sleepHours = parseFloat(document.getElementById('sleep-hours').value) || 7;
-        
-        // خوارزمية تنبؤ بسيطة
-        let predictedSugar = currentSugar;
-        
-        if (activity > 30) predictedSugar -= 10;
-        if (sleepHours < 6) predictedSugar += 15;
-        
-        return predictedSugar;
-    }
-    
-    // ==================== تهيئة الصفحة ====================
-    window.onload = function() {
-        updateChart();
-        updateWaterNeeded();
-        updateHeatStress();
-        resetTimer();
-        
-        // استعادة البيانات المحفوظة
-        restoreData();
-        
-        // إشعار ترحيبي
-        setTimeout(() => {
-            playNotification();
-        }, 1000);
-    };
-</script>
+<!-- TOOLS -->
+<div class="tools-strip">
+  <div class="tools-label">&#9889; Quick Calculators</div>
+  <div class="tools-row">
+    <a href="https://www.mdcalc.com/calc/715/nih-stroke-scale-score-nihss" target="_blank" class="tool-chip">NIHSS</a>
+    <a href="https://www.mdcalc.com/calc/64/glasgow-coma-scale-score" target="_blank" class="tool-chip">GCS</a>
+    <a href="https://www.mdcalc.com/calc/258/abcd2-score-tia" target="_blank" class="tool-chip">ABCD&sup2;</a>
+    <a href="https://www.mdcalc.com/calc/1096/has-bled-score-major-bleeding-risk" target="_blank" class="tool-chip">HAS-BLED</a>
+    <a href="https://www.mdcalc.com/calc/40/chads2-score-af-stroke-risk" target="_blank" class="tool-chip">CHA&#x2082;DS&#x2082;</a>
+    <a href="https://www.mdcalc.com/calc/1890/modified-rankin-scale-neurological-disability" target="_blank" class="tool-chip">mRS</a>
+    <a href="https://www.mdcalc.com/calc/2200/hunt-hess-classification-subarachnoid-hemorrhage" target="_blank" class="tool-chip">Hunt-Hess</a>
+    <a href="https://www.mdcalc.com/calc/10633/field-assessment-stroke-triage-emergency-destination-fast-ed" target="_blank" class="tool-chip">WFNS-SAH</a>
+  </div>
+</div>
 
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LEFT: JOURNAL CARDS -->
+  <div>
+    <div class="sec-header">
+      <div class="sec-title">Journal Updates</div>
+    </div>
+    <div class="news-grid">
+
+      <div class="news-card">
+        <div class="card-top"><span class="source-badge badge-teal">NEJM</span></div>
+        <div class="card-title">New England Journal of Medicine &mdash; Neurology</div>
+        <div class="card-desc">Latest peer-reviewed research on stroke, epilepsy, movement disorders, dementia, and neuro-oncology. Access the most cited neurology papers of 2025&ndash;2026.</div>
+        <div class="card-actions">
+          <a href="https://www.nejm.org/loi/nejm" target="_blank" class="act-btn btn-open">&#128214; Open Journal</a>
+          <button onclick="aiSummarize(this,'NEJM Neurology 2026','nejm-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
+          <button onclick="shareWA('NEJM Neurology: https://nejm.org')" class="act-btn btn-share">&#128172; Share</button>
+        </div>
+        <div class="ai-summary" id="nejm-sum"></div>
+      </div>
+
+      <div class="news-card gold-accent">
+        <div class="card-top"><span class="source-badge badge-gold">AAN &middot; Neurology&reg;</span></div>
+        <div class="card-title">Neurology&reg; &mdash; Official AAN Journal</div>
+        <div class="card-desc">The American Academy of Neurology&apos;s flagship journal. Clinical trials, practice guidelines, and case reports covering all neurology subspecialties.</div>
+        <div class="card-actions">
+          <a href="https://n.neurology.org/" target="_blank" class="act-btn btn-open">&#128214; Open Journal</a>
+          <button onclick="aiSummarize(this,'AAN Neurology journal 2026','aan-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
+          <button onclick="shareWA('AAN Neurology: https://n.neurology.org')" class="act-btn btn-share">&#128172; Share</button>
+        </div>
+        <div class="ai-summary" id="aan-sum"></div>
+      </div>
+
+      <div class="news-card">
+        <div class="card-top"><span class="source-badge badge-red">AHA &middot; STROKE</span></div>
+        <div class="card-title">Stroke &mdash; AHA/ASA Journal</div>
+        <div class="card-desc">American Heart Association stroke journal &mdash; thrombolysis, thrombectomy, secondary prevention, TIA management, and acute ischemic stroke trials.</div>
+        <div class="card-actions">
+          <a href="https://www.ahajournals.org/journal/str" target="_blank" class="act-btn btn-open">&#128214; Open Journal</a>
+          <button onclick="aiSummarize(this,'AHA Stroke journal 2026','stroke-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
+          <button onclick="shareWA('AHA Stroke Journal: https://ahajournals.org/journal/str')" class="act-btn btn-share">&#128172; Share</button>
+        </div>
+        <div class="ai-summary" id="stroke-sum"></div>
+      </div>
+
+      <div class="news-card gold-accent">
+        <div class="card-top"><span class="source-badge badge-gold">ILAE &middot; EPILEPSY</span></div>
+        <div class="card-title">ILAE &mdash; Epilepsy Guidelines &amp; Classification</div>
+        <div class="card-desc">International League Against Epilepsy. Updated 2023&ndash;2026 classification of seizure types, epilepsy syndromes, and treatment guidelines including Ramadan fasting management.</div>
+        <div class="card-actions">
+          <a href="https://www.ilae.org/guidelines" target="_blank" class="act-btn btn-open">&#128214; Guidelines</a>
+          <button onclick="aiSummarize(this,'ILAE epilepsy guidelines 2025','ilae-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
+          <button onclick="shareWA('ILAE Epilepsy Guidelines: https://ilae.org/guidelines')" class="act-btn btn-share">&#128172; Share</button>
+        </div>
+        <div class="ai-summary" id="ilae-sum"></div>
+      </div>
+
+      <div class="news-card">
+        <div class="card-top"><span class="source-badge badge-blue">LANCET NEURO</span></div>
+        <div class="card-title">The Lancet Neurology</div>
+        <div class="card-desc">High-impact neurology research from The Lancet. Covers Alzheimer&apos;s, Parkinson&apos;s, MS, rare neurological diseases, and global neurology burden data.</div>
+        <div class="card-actions">
+          <a href="https://www.thelancet.com/journals/laneur/home" target="_blank" class="act-btn btn-open">&#128214; Open Journal</a>
+          <button onclick="aiSummarize(this,'Lancet Neurology 2025 2026','lancet-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
+          <button onclick="shareWA('Lancet Neurology: https://thelancet.com/journals/laneur/home')" class="act-btn btn-share">&#128172; Share</button>
+        </div>
+        <div class="ai-summary" id="lancet-sum"></div>
+      </div>
+
+      <div class="news-card">
+        <div class="card-top"><span class="source-badge badge-teal">ESO &middot; GUIDELINES</span></div>
+        <div class="card-title">European Stroke Organisation &mdash; Clinical Guidelines</div>
+        <div class="card-desc">ESO evidence-based guidelines 2023&ndash;2026 for ischaemic stroke management, secondary prevention, atrial fibrillation, anticoagulation, and carotid stenosis.</div>
+        <div class="card-actions">
+          <a href="https://eso-stroke.org/guidelines/" target="_blank" class="act-btn btn-open">&#128214; Guidelines</a>
+          <button onclick="aiSummarize(this,'ESO Stroke guidelines 2024 2025','eso-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
+          <button onclick="shareWA('ESO Stroke Guidelines: https://eso-stroke.org/guidelines/')" class="act-btn btn-share">&#128172; Share</button>
+        </div>
+        <div class="ai-summary" id="eso-sum"></div>
+      </div>
+
+      <div class="news-card gold-accent">
+        <div class="card-top"><span class="source-badge badge-gold">PUBMED &middot; NIH</span></div>
+        <div class="card-title">PubMed &mdash; Neurology Search (2024&ndash;2026)</div>
+        <div class="card-desc">NIH National Library of Medicine. Search filtered to most recent neurology publications. Free full-text articles via PMC included.</div>
+        <div class="card-actions">
+          <a href="https://pubmed.ncbi.nlm.nih.gov/?term=neurology&filter=dates.2024%2F1%2F1-3000%2F12%2F12&sort=date" target="_blank" class="act-btn btn-open">&#128269; Search PubMed</a>
+          <button onclick="aiSummarize(this,'Top neurology PubMed 2025 2026','pubmed-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
+          <button onclick="shareWA('PubMed Neurology: https://pubmed.ncbi.nlm.nih.gov/?term=neurology')" class="act-btn btn-share">&#128172; Share</button>
+        </div>
+        <div class="ai-summary" id="pubmed-sum"></div>
+      </div>
+
+    </div>
+  </div><!-- /left -->
+
+  <!-- RIGHT: SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- Calculators -->
+    <div class="side-card">
+      <div class="sec-header" style="margin-bottom:14px;"><div class="sec-title">Clinical Calculators</div></div>
+      <div class="calc-list">
+        <a href="https://www.mdcalc.com/calc/715/nih-stroke-scale-score-nihss" target="_blank" class="calc-item">
+          <div><div class="calc-name">NIHSS</div><div class="calc-desc">Stroke severity</div></div>
+          <div class="calc-arrow">&rarr;</div>
+        </a>
+        <a href="https://www.mdcalc.com/calc/64/glasgow-coma-scale-score" target="_blank" class="calc-item">
+          <div><div class="calc-name">GCS</div><div class="calc-desc">Consciousness level</div></div>
+          <div class="calc-arrow">&rarr;</div>
+        </a>
+        <a href="https://www.mdcalc.com/calc/258/abcd2-score-tia" target="_blank" class="calc-item">
+          <div><div class="calc-name">ABCD&sup2;</div><div class="calc-desc">TIA stroke risk</div></div>
+          <div class="calc-arrow">&rarr;</div>
+        </a>
+        <a href="https://www.mdcalc.com/calc/40/chads2-score-af-stroke-risk" target="_blank" class="calc-item">
+          <div><div class="calc-name">CHA&#x2082;DS&#x2082;-VASc</div><div class="calc-desc">AF stroke risk</div></div>
+          <div class="calc-arrow">&rarr;</div>
+        </a>
+        <a href="https://www.mdcalc.com/calc/1096/has-bled-score-major-bleeding-risk" target="_blank" class="calc-item">
+          <div><div class="calc-name">HAS-BLED</div><div class="calc-desc">Bleeding risk on anticoag</div></div>
+          <div class="calc-arrow">&rarr;</div>
+        </a>
+        <a href="https://www.mdcalc.com/calc/1890/modified-rankin-scale-neurological-disability" target="_blank" class="calc-item">
+          <div><div class="calc-name">mRS</div><div class="calc-desc">Neurological disability</div></div>
+          <div class="calc-arrow">&rarr;</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Guidelines -->
+    <div class="side-card">
+      <div class="sec-header" style="margin-bottom:14px;"><div class="sec-title">Guidelines Hub</div></div>
+      <div class="guide-list">
+        <a href="https://eso-stroke.org/guidelines/" target="_blank" class="guide-item">
+          <div class="guide-dot" style="background:var(--red);box-shadow:0 0 7px var(--red);"></div>
+          <div><div class="guide-text">ESO Stroke 2024</div><div class="guide-org">European Stroke Org.</div></div>
+        </a>
+        <a href="https://www.ilae.org/guidelines" target="_blank" class="guide-item">
+          <div class="guide-dot" style="background:var(--gold);box-shadow:0 0 7px var(--gold);"></div>
+          <div><div class="guide-text">ILAE Epilepsy 2023</div><div class="guide-org">Int. League Against Epilepsy</div></div>
+        </a>
+        <a href="https://www.aan.com/Guidelines/" target="_blank" class="guide-item">
+          <div class="guide-dot" style="background:var(--teal);box-shadow:0 0 7px var(--teal);"></div>
+          <div><div class="guide-text">AAN Practice Guidelines</div><div class="guide-org">American Academy Neurology</div></div>
+        </a>
+        <a href="https://www.movementdisorders.org/Publications/Clinical-Practice-Guideline.htm" target="_blank" class="guide-item">
+          <div class="guide-dot" style="background:var(--blue);box-shadow:0 0 7px var(--blue);"></div>
+          <div><div class="guide-text">MDS Parkinson&apos;s</div><div class="guide-org">Movement Disorder Society</div></div>
+        </a>
+        <a href="https://www.alzheimersresearchuk.org/research/" target="_blank" class="guide-item">
+          <div class="guide-dot" style="background:var(--purple);box-shadow:0 0 7px var(--purple);"></div>
+          <div><div class="guide-text">Alzheimer&apos;s Research</div><div class="guide-org">Alzheimer&apos;s Research UK</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Ref -->
+    <div class="side-card">
+      <div class="sec-header" style="margin-bottom:14px;"><div class="sec-title">Quick Reference</div></div>
+      <div class="calc-list">
+        <a href="https://www.drugs.com/drug-interactions/" target="_blank" class="calc-item">
+          <div><div class="calc-name">Drug Interactions</div><div class="calc-desc">Drugs.com checker</div></div>
+          <div class="calc-arrow">&rarr;</div>
+        </a>
+        <a href="https://reference.medscape.com/drugs" target="_blank" class="calc-item">
+          <div><div class="calc-name">Medscape Drugs</div><div class="calc-desc">Dosing &amp; interactions</div></div>
+          <div class="calc-arrow">&rarr;</div>
+        </a>
+        <a href="https://www.uptodate.com/contents/search?search=neurology" target="_blank" class="calc-item">
+          <div><div class="calc-name">UpToDate Neurology</div><div class="calc-desc">Clinical decision support</div></div>
+          <div class="calc-arrow">&rarr;</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- LIVE NEWS TV CARD -->
+    <div class="side-card" id="news-note-card" style="padding:0;overflow:hidden;">
+
+      <div style="padding:14px 18px 12px;display:flex;align-items:center;justify-content:space-between;">
+        <div class="sec-title">&#128225; Live Neuro News</div>
+        <div id="news-status" style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);">LOADING...</div>
+      </div>
+
+      <div style="padding:0 18px 12px;display:flex;gap:6px;flex-wrap:wrap;">
+        <button class="src-btn active" onclick="setSource('pubmed')" id="src-pubmed">PubMed</button>
+        <button class="src-btn" onclick="setSource('lancet')" id="src-lancet">Lancet</button>
+        <button class="src-btn" onclick="setSource('aan')"    id="src-aan">AAN</button>
+        <button class="src-btn" onclick="setSource('stroke')" id="src-stroke">Stroke</button>
+      </div>
+
+      <!-- TV SCREEN -->
+      <div class="tv-screen" style="margin:0 18px;">
+        <div class="tv-banner">
+          <div class="tv-banner-left">
+            <div class="tv-live-dot"></div>
+            <span class="tv-channel-name">&#128225; NEURORADAR LIVE</span>
+          </div>
+          <span id="tv-source-id" class="tv-source-id">PUBMED NEUROLOGY</span>
+        </div>
+        <div class="tv-viewport">
+          <div class="tv-meta">
+            <div class="tv-badge-row">
+              <div id="tv-num" class="tv-num">01 / 10</div>
+              <span id="tv-date-tag" class="tv-date-tag"></span>
+            </div>
+            <div id="tv-dots" class="tv-dots"></div>
+          </div>
+          <div id="tv-headline" class="tv-headline">&#128260; Loading latest neurology news...</div>
+          <div id="tv-desc" class="tv-desc"></div>
+          <div class="tv-advance-track">
+            <div id="tv-advance" class="tv-advance-fill"></div>
+          </div>
+        </div>
+        <div class="tv-ticker-bar">
+          <div class="tv-ticker-label">&#9889; BREAKING</div>
+          <div class="tv-ticker-track">
+            <span id="tv-ticker">Fetching latest neurology headlines...</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:10px 18px 16px;">
+        <div class="refresh-track">
+          <div id="refresh-bar" class="refresh-fill"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:5px;">
+          <span id="refresh-label" style="font-size:10px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;">Next refresh in 60s</span>
+          <span id="news-count"   style="font-size:10px;color:var(--teal);font-family:'JetBrains Mono',monospace;"></span>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button onclick="fetchNews()"    class="ctrl-btn ctrl-refresh">&#128260; Refresh Now</button>
+          <button onclick="shareNewsWA()" class="ctrl-btn ctrl-share">&#128172; Share via WhatsApp</button>
+        </div>
+      </div>
+
+    </div><!-- /news card -->
+
+    <textarea id="last-news-input" style="display:none;"></textarea>
+
+  </div><!-- /sidebar -->
+</div><!-- /main -->
+
+<footer>
+  NEURORADAR &middot; DR. MADEH GADO &middot; MANSOURA, EGYPT &middot; <span id="footer-year"></span>
+</footer>
+
+<script>
+/* ── CLOCK & DATE ── */
+function updateClock(){
+  const t = new Date().toLocaleTimeString('en-GB',{timeZone:'Africa/Cairo',hour12:false});
+  document.getElementById('clock').textContent = t + ' CAI';
+}
+updateClock(); setInterval(updateClock,1000);
+const dOpts = {weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'Africa/Cairo'};
+document.getElementById('hero-date').textContent = new Date().toLocaleDateString('en-US',dOpts).toUpperCase();
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+/* ── AI SUMMARIZE ── */
+function aiSummarize(btn, topic, summaryId){
+  const box = document.getElementById(summaryId);
+  if(box.classList.contains('visible')){box.classList.remove('visible');return;}
+  box.classList.add('visible');
+  box.innerHTML = '<div class="ai-header">&#129302; AI SUMMARY &middot; GENERATING</div><div class="typing-cursor">Fetching insights on <strong>'+topic+'</strong>...</div>';
+  const prompt = 'You are a clinical neurology assistant. Give me a concise 5-bullet summary of the most important recent updates (2024-2026) in: '+topic+'.\nFocus on: key clinical trials, guideline changes, new drugs/approvals, and practice-changing evidence.\nKeep it practical for a neurologist.';
+  const url = 'https://claude.ai/new?q='+encodeURIComponent(prompt);
+  setTimeout(()=>{
+    box.innerHTML = '<div class="ai-header">&#10024; AI SUMMARY READY</div>'+
+      '<div style="margin-bottom:10px;color:var(--text-secondary);font-size:12px;">Click below to open in Claude:</div>'+
+      '<a href="'+url+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:rgba(255,200,64,0.12);border:1px solid rgba(255,200,64,0.35);color:var(--gold);text-decoration:none;font-size:12px;font-weight:700;">&#129504; Open in Claude AI &rarr;</a>'+
+      '<div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Topic: '+topic+'</div>';
+  },800);
+}
+
+/* ── SHARE ── */
+function shareWA(text){ window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(text),'_blank'); }
+
+/* ── NEWS TV ── */
+const newsInput    = document.getElementById('last-news-input');
+const newsStatus   = document.getElementById('news-status');
+const refreshBar   = document.getElementById('refresh-bar');
+const refreshLabel = document.getElementById('refresh-label');
+const newsCount    = document.getElementById('news-count');
+const tvHeadline   = document.getElementById('tv-headline');
+const tvDesc       = document.getElementById('tv-desc');
+const tvNum        = document.getElementById('tv-num');
+const tvDateTag    = document.getElementById('tv-date-tag');
+const tvTicker     = document.getElementById('tv-ticker');
+const tvDots       = document.getElementById('tv-dots');
+const tvAdvance    = document.getElementById('tv-advance');
+const tvSourceId   = document.getElementById('tv-source-id');
+
+let currentSource = 'pubmed';
+const REFRESH_SEC = 60, SLIDE_SEC = 8;
+let countdown = REFRESH_SEC, countdownTimer = null;
+let tvArticles = [], tvIdx = 0, tvTimer = null;
+
+const SOURCES = {
+  pubmed:{name:'PubMed Neurology', url:'https://pubmed.ncbi.nlm.nih.gov/rss/search/1ULTkRblxwRdPpE2j3iAilV1mjpf7hXN2N0bQ0zFaLNGpZPkB7/?limit=15'},
+  lancet:{name:'Lancet Neurology', url:'https://www.thelancet.com/rssfeed/laneur_current.xml'},
+  aan:   {name:'Neurology (AAN)',   url:'https://n.neurology.org/rss/current.xml'},
+  stroke:{name:'Stroke — AHA',     url:'https://www.ahajournals.org/action/showFeed?type=etoc&feed=rss&jc=str'}
+};
+
+function setSource(src){
+  currentSource=src;
+  document.querySelectorAll('.src-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('src-'+src).classList.add('active');
+  fetchNews();
+}
+
+function tvShow(idx){
+  if(!tvArticles.length) return;
+  tvIdx=idx;
+  const a=tvArticles[idx];
+  tvHeadline.style.animation='none'; tvDesc.style.animation='none';
+  void tvHeadline.offsetWidth;
+  tvHeadline.style.animation='tvSlide 0.4s ease forwards';
+  tvDesc.style.animation    ='tvSlide 0.55s ease forwards';
+  tvNum.textContent     = String(idx+1).padStart(2,'0')+' / '+String(tvArticles.length).padStart(2,'0');
+  tvDateTag.textContent = a.date ? '\uD83D\uDCC5 '+a.date : '';
+  tvHeadline.textContent = a.title;
+  tvDesc.textContent    = a.desc||'';
+  tvDots.innerHTML='';
+  tvArticles.forEach((_,i)=>{
+    const d=document.createElement('div');
+    const active=i===idx;
+    d.style.cssText='width:6px;height:6px;border-radius:50%;flex-shrink:0;transition:all 0.3s;background:'+(active?'#00e5c8':'rgba(255,255,255,0.15)')+(active?';box-shadow:0 0 6px #00e5c8':'')+';';
+    tvDots.appendChild(d);
+  });
+  tvAdvance.style.transition='none'; tvAdvance.style.width='0%';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    tvAdvance.style.transition='width '+SLIDE_SEC+'s linear';
+    tvAdvance.style.width='100%';
+  }));
+}
+
+function tvStart(){
+  clearInterval(tvTimer);
+  if(!tvArticles.length) return;
+  tvShow(0);
+  tvTimer=setInterval(()=>tvShow((tvIdx+1)%tvArticles.length), SLIDE_SEC*1000);
+}
+
+function tvSetTicker(articles){
+  const seg=articles.map((a,i)=>'  \u25C6  '+String(i+1).padStart(2,'0')+'. '+a.title+(a.date?' ['+a.date+']':'')).join('')+'  \u25C6  ';
+  tvTicker.textContent=seg+seg; // duplicated for seamless loop
+  tvTicker.style.animation='none'; void tvTicker.offsetWidth;
+  tvTicker.style.animation='tickerScroll '+Math.max(40,seg.length*0.12)+'s linear infinite';
+}
+
+async function fetchNews(){
+  const src=SOURCES[currentSource];
+  newsStatus.textContent='FETCHING...'; newsStatus.style.color='#ffc840';
+  tvSourceId.textContent=src.name.toUpperCase();
+  tvHeadline.textContent='\uD83D\uDD04 Loading '+src.name+'...'; tvDesc.textContent='';
+  try{
+    const res  = await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(src.url),{signal:AbortSignal.timeout(10000)});
+    const data = await res.json();
+    if(!data.contents) throw new Error('empty');
+    const xml  = new DOMParser().parseFromString(data.contents,'text/xml');
+    const items= Array.from(xml.querySelectorAll('item')).slice(0,10);
+    if(!items.length) throw new Error('no items');
+    tvArticles=items.map(item=>{
+      const title  =item.querySelector('title')?.textContent?.trim()||'';
+      const pubDate=item.querySelector('pubDate')?.textContent||'';
+      const desc   =(item.querySelector('description')?.textContent||'')
+        .replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<')
+        .replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'")
+        .trim().substring(0,140);
+      return {title, desc, date:pubDate?new Date(pubDate).toLocaleDateString('en-GB'):''};
+    });
+    const now=new Date().toLocaleString('en-GB',{timeZone:'Africa/Cairo'});
+    newsInput.value=src.name+' — '+now+'\n\n'+tvArticles.map((a,i)=>(i+1)+'. '+a.title+(a.date?'\n   '+a.date:'')+(a.desc?'\n   '+a.desc:'')).join('\n\n');
+    newsStatus.textContent='● LIVE'; newsStatus.style.color='#00e5c8';
+    newsCount.textContent=tvArticles.length+' articles';
+    tvStart(); tvSetTicker(tvArticles);
+  }catch(e){
+    const raw=FALLBACK[currentSource]||FALLBACK.pubmed;
+    const lines=raw.split('\n').filter(l=>/^\d+\./.test(l.trim()));
+    tvArticles=lines.map(l=>({title:l.replace(/^\d+\.\s*/,''),desc:'',date:'2025'}));
+    newsInput.value=raw;
+    newsStatus.textContent='⚠ CACHED'; newsStatus.style.color='#ffc840';
+    newsCount.textContent='offline mode';
+    if(tvArticles.length){tvStart();tvSetTicker(tvArticles);}
+    else{tvHeadline.textContent='⚠ Network unavailable — cached data shown';}
+  }
+  resetCountdown();
+}
+
+const FALLBACK={
+  pubmed:'1. Tenecteplase vs Alteplase in Acute Stroke\n2. Lecanemab 18-Month Results — CLARITY AD\n3. DAPT After Embolic Stroke of Unknown Source\n4. Brivaracetam Real-World 2-Year Retention\n5. Focused Ultrasound for Essential Tremor\n',
+  lancet:'1. Global Neurological Disease Burden 2024\n2. Donanemab Phase 3 — Alzheimer\'s\n3. Subclinical AF Post-Stroke — ILR vs Holter\n4. CGRP Antagonists in Chronic Migraine\n',
+  aan:   '1. AAN 2025 Thrombolysis Guideline Update\n2. AI in Neuroimaging — Practice Advisory\n3. GLP-1 Agonists in Parkinson\'s — Phase 3\n4. Autoimmune Encephalitis Treatment Update\n',
+  stroke:'1. Thrombectomy Extended Window — 24h\n2. BP Targets Post-ICH\n3. Anticoagulation Restart After Stroke\n4. Colchicine After Ischemic Stroke\n'
+};
+
+function resetCountdown(){
+  clearInterval(countdownTimer); countdown=REFRESH_SEC;
+  refreshBar.style.transition='none'; refreshBar.style.width='100%';
+  setTimeout(()=>{ refreshBar.style.transition='width '+REFRESH_SEC+'s linear'; refreshBar.style.width='0%'; },100);
+  countdownTimer=setInterval(()=>{
+    countdown--;
+    refreshLabel.textContent='Next refresh in '+countdown+'s';
+    if(countdown<=0){clearInterval(countdownTimer);fetchNews();}
+  },1000);
+}
+
+function shareNewsWA(){
+  const text=newsInput.value.trim();
+  if(!text){alert('No news loaded yet!');return;}
+  const msg='\uD83E\uDDE0 NeuroRadar — Live News\n\n'+text.substring(0,900)+'\n\n— Dr. Madeh Gado · Neurology, Mansoura';
+  window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(msg),'_blank');
+}
+
+fetchNews();
+</script>
 </body>
 </html>
