@@ -1,904 +1,1167 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>د. مادح محمد جادو - استشاري طب المخ والأعصاب</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #0a1628;
-    --deep-blue: #0d2147;
-    --mid-blue: #1a3a7c;
-    --accent-gold: #d4a843;
-    --accent-teal: #00c9b1;
-    --light-teal: #e0faf7;
-    --white: #ffffff;
-    --off-white: #f7f9fc;
-    --text-dark: #1a1a2e;
-    --text-gray: #6b7a99;
-    --card-bg: #ffffff;
-    --shadow: 0 8px 32px rgba(10,22,40,0.12);
-    --shadow-hover: 0 16px 48px rgba(10,22,40,0.2);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Cairo', sans-serif;
-    background: var(--off-white);
-    color: var(--text-dark);
-    overflow-x: hidden;
-  }
-
-  /* ===== HERO ===== */
-  .hero {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--deep-blue) 50%, var(--mid-blue) 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    padding: 60px 20px 80px;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(0,201,177,0.12) 0%, transparent 70%);
-    top: -100px; left: -100px;
-    animation: pulse 6s ease-in-out infinite;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(212,168,67,0.1) 0%, transparent 70%);
-    bottom: -50px; right: -50px;
-    animation: pulse 8s ease-in-out infinite reverse;
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.2); opacity: 1; }
-  }
-
-  /* floating circles */
-  .hero-circles span {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(0,201,177,0.15);
-    animation: rotate 20s linear infinite;
-  }
-  .hero-circles span:nth-child(1) { width: 300px; height: 300px; top: 10%; right: 5%; }
-  .hero-circles span:nth-child(2) { width: 200px; height: 200px; bottom: 20%; left: 8%; animation-duration: 15s; animation-direction: reverse; }
-  .hero-circles span:nth-child(3) { width: 150px; height: 150px; top: 60%; right: 15%; animation-duration: 25s; }
-
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  .badge {
-    background: rgba(0,201,177,0.15);
-    border: 1px solid rgba(0,201,177,0.4);
-    color: var(--accent-teal);
-    padding: 8px 20px;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    margin-bottom: 24px;
-    position: relative;
-    z-index: 2;
-    animation: fadeDown 0.8s ease forwards;
-  }
-
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .avatar-wrap {
-    position: relative;
-    z-index: 2;
-    margin-bottom: 28px;
-    animation: fadeUp 0.8s ease 0.2s both;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .avatar-ring {
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-teal));
-    padding: 4px;
-    box-shadow: 0 0 40px rgba(0,201,177,0.3);
-  }
-
-  .avatar-inner {
-    width: 100%; height: 100%;
-    border-radius: 50%;
-    background: var(--deep-blue);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 56px;
-    overflow: hidden;
-  }
-
-  .avatar-inner img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-
-  #photo-upload { display: none; }
-  .avatar-ring { cursor: pointer; position: relative; }
-  .avatar-ring:hover::after {
-    content: '📷 تغيير الصورة';
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 13px;
-    font-weight: 700;
-    text-align: center;
-  }
-
-  .hero-name {
-    font-family: 'Scheherazade New', serif;
-    font-size: clamp(38px, 7vw, 62px);
-    font-weight: 700;
-    color: var(--white);
-    text-align: center;
-    line-height: 1.2;
-    position: relative;
-    z-index: 2;
-    animation: fadeUp 0.8s ease 0.3s both;
-  }
-
-  .hero-title {
-    color: var(--accent-teal);
-    font-size: clamp(16px, 3vw, 20px);
-    font-weight: 400;
-    margin-top: 10px;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-    animation: fadeUp 0.8s ease 0.4s both;
-  }
-
-  .hero-creds {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 24px;
-    position: relative;
-    z-index: 2;
-    animation: fadeUp 0.8s ease 0.5s both;
-  }
-
-  .cred-pill {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.85);
-    padding: 8px 18px;
-    border-radius: 50px;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .cred-pill span { color: var(--accent-gold); font-size: 16px; }
-
-  .hero-btns {
-    display: flex;
-    gap: 14px;
-    margin-top: 36px;
-    flex-wrap: wrap;
-    justify-content: center;
-    position: relative;
-    z-index: 2;
-    animation: fadeUp 0.8s ease 0.6s both;
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, var(--accent-teal), #00a896);
-    color: white;
-    padding: 14px 32px;
-    border-radius: 50px;
-    font-size: 15px;
-    font-weight: 700;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(0,201,177,0.35);
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,201,177,0.5); }
-
-  .btn-secondary {
-    background: transparent;
-    color: white;
-    padding: 14px 32px;
-    border-radius: 50px;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    border: 1px solid rgba(255,255,255,0.3);
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 28px;
-    color: rgba(255,255,255,0.4);
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    z-index: 2;
-    animation: bounce 2s ease infinite;
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-
-  .scroll-hint::after {
-    content: '↓';
-    font-size: 18px;
-    color: var(--accent-teal);
-  }
-
-  /* ===== STATS ===== */
-  .stats-bar {
-    background: white;
-    padding: 32px 20px;
-    box-shadow: var(--shadow);
-  }
-
-  .stats-grid {
-    max-width: 800px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-
-  .stat-item {
-    text-align: center;
-    padding: 16px;
-    border-left: 1px solid #eee;
-  }
-
-  .stat-item:last-child { border-left: none; }
-
-  .stat-num {
-    font-family: 'Tajawal', sans-serif;
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--mid-blue);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 13px;
-    color: var(--text-gray);
-    margin-top: 6px;
-  }
-
-  /* ===== SECTIONS ===== */
-  section {
-    padding: 70px 20px;
-  }
-
-  .section-header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .section-tag {
-    display: inline-block;
-    background: var(--light-teal);
-    color: var(--accent-teal);
-    padding: 6px 18px;
-    border-radius: 50px;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 14px;
-  }
-
-  .section-title {
-    font-family: 'Tajawal', sans-serif;
-    font-size: clamp(24px, 4vw, 36px);
-    font-weight: 800;
-    color: var(--navy);
-    line-height: 1.3;
-  }
-
-  .section-subtitle {
-    color: var(--text-gray);
-    font-size: 15px;
-    margin-top: 10px;
-  }
-
-  .divider {
-    width: 60px; height: 4px;
-    background: linear-gradient(to right, var(--accent-teal), var(--accent-gold));
-    border-radius: 2px;
-    margin: 14px auto 0;
-  }
-
-  /* ===== SYMPTOMS ===== */
-  .symptoms-section { background: var(--off-white); }
-
-  .symptoms-grid {
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-  }
-
-  .symptom-card {
-    background: white;
-    border: 1.5px solid #e0e7f0;
-    border-radius: 50px;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  }
-
-  .symptom-card:hover {
-    border-color: var(--accent-teal);
-    background: var(--light-teal);
-    transform: translateY(-2px);
-  }
-
-  .symptom-icon { font-size: 18px; }
-
-  .symptom-name {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--navy);
-    white-space: nowrap;
-  }
-
-  /* ===== CLINICS ===== */
-  .clinics-section { background: white; }
-
-  .clinics-grid {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-    gap: 24px;
-  }
-
-  .clinic-card {
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: all 0.3s;
-  }
-
-  .clinic-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
-
-  .clinic-header {
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .clinic-icon {
-    width: 48px; height: 48px;
-    border-radius: 14px;
-    background: rgba(255,255,255,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-  }
-
-  .clinic-city { font-size: 20px; font-weight: 800; color: white; }
-  .clinic-center { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 2px; }
-
-  .clinic-body { padding: 20px 24px; background: white; }
-
-  .clinic-info-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-
-  .info-icon {
-    width: 34px; height: 34px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-    background: var(--off-white);
-  }
-
-  .info-text { font-size: 14px; color: var(--text-dark); line-height: 1.5; }
-  .info-label { font-size: 11px; color: var(--text-gray); margin-bottom: 2px; }
-
-  .clinic-call-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    padding: 13px;
-    border-radius: 12px;
-    border: none;
-    font-family: 'Cairo', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
-    margin-top: 8px;
-    transition: all 0.3s;
-    color: white;
-  }
-
-  .clinic-map-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 10px;
-    border-radius: 12px;
-    border: 1.5px solid #e0e7f0;
-    font-family: 'Cairo', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    margin-top: 8px;
-    color: var(--text-dark);
-    background: var(--off-white);
-    transition: all 0.3s;
-  }
-
-  .clinic-card-1 .clinic-header { background: linear-gradient(135deg, #1a3a7c, #2d5db8); }
-  .clinic-card-1 .clinic-call-btn { background: linear-gradient(135deg, #1a3a7c, #2d5db8); }
-  .clinic-card-1 .clinic-call-btn:hover { box-shadow: 0 8px 20px rgba(26,58,124,0.4); transform: translateY(-2px); }
-
-  .clinic-card-2 .clinic-header { background: linear-gradient(135deg, #00a896, #00c9b1); }
-  .clinic-card-2 .clinic-call-btn { background: linear-gradient(135deg, #00a896, #00c9b1); }
-  .clinic-card-2 .clinic-call-btn:hover { box-shadow: 0 8px 20px rgba(0,168,150,0.4); transform: translateY(-2px); }
-
-  .clinic-card-3 .clinic-header { background: linear-gradient(135deg, #7c3a9e, #b06de0); }
-  .clinic-card-3 .clinic-call-btn { background: linear-gradient(135deg, #7c3a9e, #b06de0); }
-  .clinic-card-3 .clinic-call-btn:hover { box-shadow: 0 8px 20px rgba(124,58,158,0.4); transform: translateY(-2px); }
-
-  /* ===== CONTACT ===== */
-  .contact-section {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--deep-blue) 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .contact-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300c9b1' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  }
-
-  .contact-inner {
-    max-width: 700px;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-  }
-
-  .contact-title {
-    font-family: 'Tajawal', sans-serif;
-    font-size: clamp(26px, 4vw, 38px);
-    font-weight: 800;
-    color: white;
-    margin-bottom: 12px;
-  }
-
-  .contact-sub {
-    color: rgba(255,255,255,0.6);
-    font-size: 15px;
-    margin-bottom: 40px;
-  }
-
-  .contact-btns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    justify-content: center;
-  }
-
-  .contact-btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 32px;
-    border-radius: 16px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s;
-    min-width: 220px;
-    justify-content: center;
-  }
-
-  .whatsapp-btn {
-    background: linear-gradient(135deg, #25D366, #128C7E);
-    color: white;
-    box-shadow: 0 8px 24px rgba(37,211,102,0.3);
-  }
-
-  .whatsapp-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(37,211,102,0.45); }
-
-  .call-btn {
-    background: linear-gradient(135deg, var(--accent-teal), #00a896);
-    color: white;
-    box-shadow: 0 8px 24px rgba(0,201,177,0.3);
-  }
-
-  .call-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0,201,177,0.45); }
-
-  /* ===== FOOTER ===== */
-  footer {
-    background: var(--navy);
-    padding: 24px 20px;
-    text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-
-  footer p {
-    color: rgba(255,255,255,0.35);
-    font-size: 13px;
-  }
-
-  footer span { color: var(--accent-teal); }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 600px) {
-    .stats-grid { grid-template-columns: repeat(3,1fr); gap: 8px; }
-    .stat-num { font-size: 24px; }
-    .hero-btns { flex-direction: column; align-items: center; }
-    .contact-btns { flex-direction: column; align-items: center; }
-    .contact-btn { width: 100%; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخطة العلاجية الذكية - د. مادح محمد</title>
+    <style>
+        * {
+            transition: all 0.3s ease;
+        }
+        
+        :root {
+            --primary-blue: #004d7a;
+            --secondary-green: #2ecc71;
+            --warning-orange: #f39c12;
+            --danger-red: #e74c3c;
+            --light-gray: #f4f7f6;
+            --dark-bg: #1a1a1a;
+            --dark-card: #2d2d2d;
+            --dark-text: #ffffff;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            padding: 10px;
+            line-height: 1.6;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        
+        body.dark-mode .container {
+            background: var(--dark-card);
+        }
+        
+        body.dark-mode .section {
+            border-bottom-color: #444;
+        }
+        
+        body.dark-mode .check-list li {
+            background: #3d3d3d;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 { margin: 0; font-size: 24px; }
+        .header p { margin: 5px 0 0; opacity: 0.9; }
+        
+        .dark-mode-toggle {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .section { padding: 20px; border-bottom: 1px solid #eee; }
+        .section-title {
+            color: var(--primary-blue);
+            border-right: 5px solid var(--secondary-green);
+            padding-right: 10px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        /* توقيت زمني */
+        .timeline {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .time-point {
+            background: var(--primary-blue);
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: var(--box-shadow);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* مؤقت */
+        .timer-container {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-blue), #0066a0);
+            color: white;
+            border-radius: var(--border-radius);
+            margin: 15px 0;
+        }
+        
+        .timer-display {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .timer-controls button {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid white;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        
+        .timer-controls button:hover {
+            background: white;
+            color: var(--primary-blue);
+        }
+        
+        /* أشرطة التقدم */
+        .progress-container {
+            margin: 15px 0;
+        }
+        
+        .progress-bar {
+            height: 25px;
+            background: #eee;
+            border-radius: 15px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--secondary-green);
+            border-radius: 15px;
+            width: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+            transition: width 1s ease;
+        }
+        
+        /* المؤشرات الحيوية */
+        .vital-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .vital-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid #dee2e6;
+        }
+        
+        body.dark-mode .vital-card {
+            background: #3d3d3d;
+            border-color: #555;
+        }
+        
+        .vital-card label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+        
+        .vital-card input, .vital-card select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        
+        /* الرسوم البيانية */
+        .chart-container {
+            height: 300px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .mini-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 200px;
+            gap: 10px;
+            padding: 20px 0;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background: var(--primary-blue);
+            min-width: 30px;
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            animation: rise 1s ease;
+        }
+        
+        @keyframes rise {
+            from { height: 0; }
+            to { height: var(--height); }
+        }
+        
+        .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+        }
+        
+        .chart-label {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        
+        /* نظام النقاط والتحفيز */
+        .points-system {
+            background: linear-gradient(135deg, #f39c12, #f1c40f);
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin: 15px 0;
+        }
+        
+        .points-display {
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .badges-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        
+        .badge {
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            opacity: 0.5;
+            cursor: pointer;
+        }
+        
+        .badge.earned {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px gold;
+        }
+        
+        /* توصيات ذكية */
+        .recommendation-box {
+            background: #e3f2fd;
+            border-right: 5px solid var(--primary-blue);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin: 10px 0;
+        }
+        
+        body.dark-mode .recommendation-box {
+            background: #2d3e4f;
+        }
+        
+        /* وصفات الطعام */
+        .recipe-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--box-shadow);
+            border: 1px solid #eee;
+        }
+        
+        body.dark-mode .recipe-card {
+            background: #3d3d3d;
+            border-color: #555;
+        }
+        
+        .recipe-image {
+            width: 100%;
+            height: 150px;
+            background: #ddd;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        
+        /* المساعد الصحي */
+        .chat-container {
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f9f9f9;
+        }
+        
+        body.dark-mode .chat-messages {
+            background: #2d2d2d;
+        }
+        
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            max-width: 80%;
+        }
+        
+        .user-message {
+            background: var(--primary-blue);
+            color: white;
+            margin-left: auto;
+        }
+        
+        .bot-message {
+            background: #e9ecef;
+            color: #333;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        
+        .chat-input button {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        /* جودة النوم */
+        .sleep-tracker {
+            background: #4a5568;
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+        }
+        
+        .sleep-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        /* مؤشر الإجهاد الحراري */
+        .heat-stress {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin: 15px 0;
+        }
+        
+        .heat-level {
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        /* تقارير PDF */
+        .report-section {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .pdf-button {
+            background: var(--danger-red);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1.1em;
+            margin: 10px;
+        }
+        
+        /* مزامنة الأجهزة */
+        .device-sync {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .device-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* زر الطوارئ */
+        .emergency-btn {
+            background: var(--danger-red);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            animation: emergencyPulse 1.5s infinite;
+        }
+        
+        @keyframes emergencyPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+        
+        /* تعدد اللغات */
+        .language-selector {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .time-point {
+                width: 70px;
+                height: 70px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-circles">
-    <span></span><span></span><span></span>
-  </div>
-
-  <div class="badge">🧠 عيادة المخ والأعصاب</div>
-
-  <input type="file" id="photo-upload" accept="image/*" onchange="loadPhoto(event)">
-  <div class="avatar-wrap" onclick="document.getElementById('photo-upload').click()">
-    <div class="avatar-ring">
-      <div class="avatar-inner" id="avatar-inner">
-        <img id="doctor-photo" src="" alt="د. مادح" style="display:none">
-        <span id="avatar-placeholder" style="font-size:56px">👨‍⚕️</span>
-      </div>
+<div class="container">
+    <div class="header">
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 الوضع الليلي</button>
+        <select class="language-selector" onchange="changeLanguage(this.value)">
+            <option value="ar">🇸🇦 العربية</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="fr">🇫🇷 Français</option>
+        </select>
+        <h1 id="main-title">🌙 بروتوكول رمضان 2026 - النظام الصحي الذكي</h1>
+        <p id="sub-title">د. مادح محمد | مقاومة أنسولين 9.6 | BMI 45.5</p>
     </div>
-  </div>
 
-  <h1 class="hero-name">د. مادح محمد جادو</h1>
-  <p class="hero-title">استشاري طب المخ والأعصاب</p>
-
-  <div class="hero-creds">
-    <div class="cred-pill"><span>🎓</span> الزمالة المصرية للأمراض العصبية</div>
-    <div class="cred-pill"><span>🏥</span> رئيس قسم الأعصاب — مستشفى بلقاس</div>
-  </div>
-
-  <div class="hero-btns">
-    <a href="https://wa.me/201096907444" class="btn-primary">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.525 5.857L0 24l6.338-1.505A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.015-1.374l-.36-.214-3.732.886.936-3.622-.236-.373A9.773 9.773 0 012.182 12C2.182 6.578 6.578 2.182 12 2.182S21.818 6.578 21.818 12 17.422 21.818 12 21.818z"/></svg>
-      احجز عبر واتساب
-    </a>
-    <a href="tel:01066564564" class="btn-secondary">
-      📞 اتصل بنا
-    </a>
-  </div>
-
-  <div class="scroll-hint">تصفح للأسفل</div>
-</section>
-
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stats-grid">
-    <div class="stat-item">
-      <div class="stat-num">3</div>
-      <div class="stat-label">فروع العيادة</div>
+    <!-- الخط الزمني -->
+    <div class="section">
+        <div class="section-title">⏰ الخط الزمني اليومي</div>
+        <div class="timeline">
+            <div class="time-point" data-time="6:00">6:00 م<br>كسر الصيام</div>
+            <div class="time-point" data-time="6:45">6:45 م<br>الإفطار</div>
+            <div class="time-point" data-time="9:00">9:00 م<br>المشي</div>
+            <div class="time-point" data-time="2:00">2:00 ص<br>السحور</div>
+        </div>
     </div>
-    <div class="stat-item">
-      <div class="stat-num">+10</div>
-      <div class="stat-label">سنوات خبرة</div>
+
+    <!-- مؤقت زمني -->
+    <div class="section">
+        <div class="section-title">⏲️ مؤقت فترة الانتظار (45 دقيقة)</div>
+        <div class="timer-container">
+            <div class="timer-display" id="timer">45:00</div>
+            <div class="timer-controls">
+                <button onclick="startTimer()">▶️ بدء</button>
+                <button onclick="pauseTimer()">⏸️ إيقاف مؤقت</button>
+                <button onclick="resetTimer()">🔄 إعادة</button>
+            </div>
+        </div>
     </div>
-    <div class="stat-item">
-      <div class="stat-num">8</div>
-      <div class="stat-label">تخصصات علاجية</div>
+
+    <!-- المؤشرات الحيوية -->
+    <div class="section">
+        <div class="section-title">📊 المؤشرات الحيوية</div>
+        <div class="vital-grid">
+            <div class="vital-card">
+                <label>نسبة السكر (mg/dL)</label>
+                <input type="number" id="sugar-level" onchange="updateHealthData()">
+            </div>
+            <div class="vital-card">
+                <label>الوزن (كجم)</label>
+                <input type="number" id="weight" onchange="updateWaterNeeded()">
+            </div>
+            <div class="vital-card">
+                <label>ضغط الدم</label>
+                <input type="text" id="blood-pressure">
+            </div>
+            <div class="vital-card">
+                <label>النشاط (دقائق)</label>
+                <input type="number" id="activity" onchange="updateProgress()">
+            </div>
+            <div class="vital-card">
+                <label>جودة النوم</label>
+                <select id="sleep-quality">
+                    <option value="ممتاز">ممتاز</option>
+                    <option value="جيد">جيد</option>
+                    <option value="مقبول">مقبول</option>
+                    <option value="سيء">سيء</option>
+                </select>
+            </div>
+            <div class="vital-card">
+                <label>درجة الحرارة المحيطة</label>
+                <input type="number" id="temperature" onchange="updateHeatStress()">
+            </div>
+        </div>
     </div>
-  </div>
+
+    <!-- أشرطة التقدم -->
+    <div class="section">
+        <div class="section-title">📈 تقدم الأهداف</div>
+        <div class="progress-container" id="water-progress">
+            <div style="display: flex; justify-content: space-between;">
+                <span>شرب الماء</span>
+                <span id="water-percent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="water-fill" style="width: 0%;">0 لتر</div>
+            </div>
+        </div>
+        
+        <div class="progress-container" id="activity-progress">
+            <div style="display: flex; justify-content: space-between;">
+                <span>النشاط البدني</span>
+                <span id="activity-percent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="activity-fill" style="width: 0%;">0 دقيقة</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- رسم بياني -->
+    <div class="section">
+        <div class="section-title">📉 تطور السكر (آخر 7 أيام)</div>
+        <div class="chart-container">
+            <div class="mini-chart" id="sugar-chart"></div>
+        </div>
+    </div>
+
+    <!-- نظام النقاط والشارات -->
+    <div class="section">
+        <div class="section-title">🏆 نظام التحفيز</div>
+        <div class="points-system">
+            <div>نقاط الالتزام</div>
+            <div class="points-display" id="points">1500</div>
+        </div>
+        
+        <div class="badges-container" id="badges">
+            <div class="badge earned" onclick="showBadgeInfo('الانتظام')">⭐ الانتظام 7 أيام</div>
+            <div class="badge" onclick="showBadgeInfo('الماء')">💧 شرب الماء</div>
+            <div class="badge" onclick="showBadgeInfo('الرياضة')">🏃 المشي اليومي</div>
+            <div class="badge earned" onclick="showBadgeInfo('الدواء')">💊 الالتزام بالدواء</div>
+            <div class="badge" onclick="showBadgeInfo('النوم')">😴 نوم صحي</div>
+        </div>
+    </div>
+
+    <!-- توصيات ذكية -->
+    <div class="section">
+        <div class="section-title">🤖 توصيات الذكاء الاصطناعي</div>
+        <div class="recommendation-box" id="ai-recommendation">
+            <strong>بناء على قراءات اليوم:</strong>
+            <p id="recommendation-text">نسبة السكر مرتفعة قليلاً. يفضل تقليل الكربوهيدرات في وجبة الإفطار وزيادة كمية الخضروات.</p>
+        </div>
+    </div>
+
+    <!-- وصفات مقترحة -->
+    <div class="section">
+        <div class="section-title">🥗 وصفات مقترحة</div>
+        <div class="grid-container" id="recipes">
+            <div class="recipe-card">
+                <div class="recipe-image">🍳</div>
+                <h3>عجة البيض بالخضار</h3>
+                <p>بيض + فلفل ألوان + سبانخ + زيت زيتون</p>
+                <p><strong>السعرات:</strong> 280 سعرة</p>
+                <button onclick="saveMeal(this)">📸 تسجيل الوجبة</button>
+            </div>
+            <div class="recipe-card">
+                <div class="recipe-image">🐟</div>
+                <h3>سمك مشوي بالخضار</h3>
+                <p>سمك + كوسا + جزر + بهارات</p>
+                <p><strong>السعرات:</strong> 350 سعرة</p>
+                <button onclick="saveMeal(this)">📸 تسجيل الوجبة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مساعد صحي -->
+    <div class="section">
+        <div class="section-title">💬 المساعد الصحي</div>
+        <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-message bot-message">مرحباً! كيف يمكنني مساعدتك اليوم؟</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chat-input" placeholder="اكتب سؤالك..." onkeypress="if(event.key==='Enter') sendMessage()">
+                <button onclick="sendMessage()">إرسال</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- تتبع النوم -->
+    <div class="section">
+        <div class="section-title">😴 تتبع النوم</div>
+        <div class="sleep-tracker">
+            <div class="sleep-stats">
+                <div>
+                    <div>⏰ المدة</div>
+                    <div><input type="number" id="sleep-hours" min="0" max="24" step="0.5" value="7" onchange="updateSleepStats()"> ساعة</div>
+                </div>
+                <div>
+                    <div>💤 عميق</div>
+                    <div><input type="number" id="deep-sleep" min="0" max="24" step="0.5" value="2" onchange="updateSleepStats()"> ساعة</div>
+                </div>
+                <div>
+                    <div>🔄 الاستيقاظ</div>
+                    <div><input type="number" id="wake-ups" min="0" value="2" onchange="updateSleepStats()"> مرة</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مؤشر الإجهاد الحراري -->
+    <div class="section">
+        <div class="section-title">🌡️ مؤشر الإجهاد الحراري</div>
+        <div class="heat-stress">
+            <div class="heat-level" id="heat-stress-level">منخفض</div>
+            <div>نصائح: اشرب الماء بانتظام، تجنب التعرض المباشر للشمس</div>
+        </div>
+    </div>
+
+    <!-- مزامنة الأجهزة -->
+    <div class="section">
+        <div class="section-title">🔄 مزامنة الأجهزة</div>
+        <div class="device-sync">
+            <button class="device-btn" onclick="syncDevice('apple')">🍎 Apple Health</button>
+            <button class="device-btn" onclick="syncDevice('samsung')">📱 Samsung Health</button>
+            <button class="device-btn" onclick="syncDevice('fitbit')">⌚ Fitbit</button>
+            <button class="device-btn" onclick="syncDevice('glucose')">💉 جهاز السكر</button>
+        </div>
+    </div>
+
+    <!-- تقارير PDF -->
+    <div class="section report-section">
+        <div class="section-title">📋 التقارير</div>
+        <button class="pdf-button" onclick="generatePDF()">📥 تحميل تقرير الأسبوع PDF</button>
+        <button class="pdf-button" onclick="shareWithDoctor()">👨‍⚕️ مشاركة مع الطبيب</button>
+    </div>
+
+    <!-- زر الطوارئ -->
+    <button class="emergency-btn" onclick="emergencyCall()">🚨 طوارئ</button>
+
+    <!-- النسخ الاحتياطي -->
+    <div class="section">
+        <div class="section-title">💾 النسخ الاحتياطي</div>
+        <div style="text-align: center; margin: 10px 0;">
+            <button onclick="backupData()">📤 نسخ احتياطي</button>
+            <button onclick="restoreData()">📥 استعادة البيانات</button>
+        </div>
+    </div>
+
+    <!-- أمان إضافي -->
+    <div class="section">
+        <div class="section-title">🔒 الأمان والخصوصية</div>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button onclick="enableFingerprint()">👆 تفعيل البصمة</button>
+            <button onclick="encryptData()">🔐 تشفير البيانات</button>
+        </div>
+    </div>
+
+    <!-- خاتمة -->
+    <div class="footer">
+        <p>تم تطويره بتقنيات الذكاء الاصطناعي - جميع الحقوق محفوظة © 2026</p>
+        <p id="last-sync">آخر مزامنة: <span id="sync-time">الآن</span></p>
+    </div>
 </div>
 
-<!-- SYMPTOMS -->
-<section class="symptoms-section">
-  <div class="section-header">
-    <div class="section-tag">الأعراض التي نعالجها</div>
-    <h2 class="section-title">لو بتعاني من أي من هذه الأعراض</h2>
-    <p class="section-subtitle">احجز استشارتك دلوقتي</p>
-    <div class="divider"></div>
-  </div>
-
-  <div class="symptoms-grid">
-    <div class="symptom-card">
-      <span class="symptom-icon">⚡</span>
-      <div class="symptom-name">تشنجات وصرع</div>
-    </div>
-    <div class="symptom-card">
-      <span class="symptom-icon">🧠</span>
-      <div class="symptom-name">جلطات المخ</div>
-    </div>
-    <div class="symptom-card">
-      <span class="symptom-icon">🤕</span>
-      <div class="symptom-name">صداع مزمن</div>
-    </div>
-    <div class="symptom-card">
-      <span class="symptom-icon">🫀</span>
-      <div class="symptom-name">شلل نصفي</div>
-    </div>
-    <div class="symptom-card">
-      <span class="symptom-icon">🦴</span>
-      <div class="symptom-name">آلام الرقبة</div>
-    </div>
-    <div class="symptom-card">
-      <span class="symptom-icon">🔩</span>
-      <div class="symptom-name">آلام الظهر</div>
-    </div>
-    <div class="symptom-card">
-      <span class="symptom-icon">🔄</span>
-      <div class="symptom-name">تصلب متعدد</div>
-    </div>
-    <div class="symptom-card">
-      <span class="symptom-icon">🤲</span>
-      <div class="symptom-name">حركات لا إرادية</div>
-    </div>
-    <div class="symptom-card">
-      <span class="symptom-icon">🖐️</span>
-      <div class="symptom-name">تنميل وضعف أعصاب</div>
-    </div>
-  </div>
-</section>
-
-<!-- CLINICS -->
-<section class="clinics-section">
-  <div class="section-header">
-    <div class="section-tag">فروع العيادة</div>
-    <h2 class="section-title">اختر الفرع الأقرب إليك</h2>
-    <p class="section-subtitle">مواعيد شهر رمضان 🌙</p>
-    <div class="divider"></div>
-  </div>
-
-  <div class="clinics-grid">
-
-    <!-- المنصورة -->
-    <div class="clinic-card clinic-card-1">
-      <div class="clinic-header">
-        <div class="clinic-icon">📍</div>
-        <div>
-          <div class="clinic-city">المنصورة</div>
-          <div class="clinic-center">مشعل — الدور الخامس</div>
-        </div>
-      </div>
-      <div class="clinic-body">
-        <div class="clinic-info-row">
-          <div class="info-icon">📅</div>
-          <div>
-            <div class="info-label">أيام العمل</div>
-            <div class="info-text">الإثنين — الخميس</div>
-          </div>
-        </div>
-        <div class="clinic-info-row">
-          <div class="info-icon">🌙</div>
-          <div>
-            <div class="info-label">مواعيد رمضان</div>
-            <div class="info-text">من 1 إلى 4 عصراً</div>
-          </div>
-        </div>
-        <div class="clinic-info-row">
-          <div class="info-icon">📌</div>
-          <div>
-            <div class="info-label">العنوان</div>
-            <div class="info-text">أمام مطعم العناني — فوق مركز الجراحة</div>
-          </div>
-        </div>
-        <a href="tel:01096907111" class="clinic-call-btn">📞 01096907111</a>
-        <a href="https://maps.app.goo.gl/1Rm1XGmycrWPRg99A" target="_blank" class="clinic-map-btn">🗺️ الموقع على الخريطة</a>
-      </div>
-    </div>
-
-    <!-- بلقاس -->
-    <div class="clinic-card clinic-card-2">
-      <div class="clinic-header">
-        <div class="clinic-icon">📍</div>
-        <div>
-          <div class="clinic-city">بلقاس</div>
-          <div class="clinic-center">المزلقان — الدور الثاني</div>
-        </div>
-      </div>
-      <div class="clinic-body">
-        <div class="clinic-info-row">
-          <div class="info-icon">📅</div>
-          <div>
-            <div class="info-label">أيام العمل</div>
-            <div class="info-text">السبت — الثلاثاء</div>
-          </div>
-        </div>
-        <div class="clinic-info-row">
-          <div class="info-icon">🌙</div>
-          <div>
-            <div class="info-label">مواعيد رمضان</div>
-            <div class="info-text">من 10 صباحاً إلى 3 عصراً</div>
-          </div>
-        </div>
-        <div class="clinic-info-row">
-          <div class="info-icon">📌</div>
-          <div>
-            <div class="info-label">العنوان</div>
-            <div class="info-text">طلعت مطاوع</div>
-          </div>
-        </div>
-        <a href="tel:01096907444" class="clinic-call-btn">📞 01096907444</a>
-        <a href="https://maps.app.goo.gl/wUY8tpKUfh4aErbr5" target="_blank" class="clinic-map-btn">🗺️ الموقع على الخريطة</a>
-      </div>
-    </div>
-
-    <!-- ديسط -->
-    <div class="clinic-card clinic-card-3">
-      <div class="clinic-header">
-        <div class="clinic-icon">📍</div>
-        <div>
-          <div class="clinic-city">ديسط</div>
-          <div class="clinic-center">مركز طلخا</div>
-        </div>
-      </div>
-      <div class="clinic-body">
-        <div class="clinic-info-row">
-          <div class="info-icon">📅</div>
-          <div>
-            <div class="info-label">أيام العمل</div>
-            <div class="info-text">الأحد — الأربعاء</div>
-          </div>
-        </div>
-        <div class="clinic-info-row">
-          <div class="info-icon">🌙</div>
-          <div>
-            <div class="info-label">مواعيد رمضان</div>
-            <div class="info-text">من 1 إلى 4 عصراً</div>
-          </div>
-        </div>
-        <div class="clinic-info-row">
-          <div class="info-icon">📌</div>
-          <div>
-            <div class="info-label">العنوان</div>
-            <div class="info-text">أول البلد — أمام الكوبري الصغير</div>
-          </div>
-        </div>
-        <a href="tel:01006761235" class="clinic-call-btn">📞 01006761235</a>
-        <a href="https://maps.app.goo.gl/DoVZCUkRKKgv9xiY8" target="_blank" class="clinic-map-btn">🗺️ الموقع على الخريطة</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact-section">
-  <div class="contact-inner">
-    <h2 class="contact-title">احجز استشارتك الآن</h2>
-    <p class="contact-sub">تواصل معنا عبر الطريقة المناسبة لك</p>
-    <div class="contact-btns">
-      <a href="https://wa.me/201096907444" class="contact-btn whatsapp-btn">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.525 5.857L0 24l6.338-1.505A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.015-1.374l-.36-.214-3.732.886.936-3.622-.236-.373A9.773 9.773 0 012.182 12C2.182 6.578 6.578 2.182 12 2.182S21.818 6.578 21.818 12 17.422 21.818 12 21.818z"/></svg>
-        واتساب: 01096907444
-      </a>
-      <a href="tel:01066564564" class="contact-btn call-btn">
-        📞 اتصال: 01066564564
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <p>جميع الحقوق محفوظة &copy; 2025 — <span>د. مادح محمد جادو</span></p>
-</footer>
-
 <script>
-  // Photo upload
-  function loadPhoto(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = document.getElementById('doctor-photo');
-      const placeholder = document.getElementById('avatar-placeholder');
-      img.src = e.target.result;
-      img.style.display = 'block';
-      placeholder.style.display = 'none';
+    // ==================== متغيرات عامة ====================
+    let timerInterval;
+    let timerSeconds = 2700; // 45 دقيقة
+    let points = 1500;
+    let language = 'ar';
+    
+    // ==================== الترجمات ====================
+    const translations = {
+        ar: {
+            mainTitle: "🌙 بروتوكول رمضان 2026 - النظام الصحي الذكي",
+            darkMode: "🌙 الوضع الليلي",
+            emergency: "🚨 طوارئ"
+        },
+        en: {
+            mainTitle: "🌙 Ramadan 2026 Protocol - Smart Health System",
+            darkMode: "🌙 Dark Mode",
+            emergency: "🚨 Emergency"
+        },
+        fr: {
+            mainTitle: "🌙 Protocole Ramadan 2026 - Système de Santé Intelligent",
+            darkMode: "🌙 Mode Nuit",
+            emergency: "🚨 Urgence"
+        }
     };
-    reader.readAsDataURL(file);
-  }
-
-  // Animate elements on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.symptom-card, .clinic-card, .stat-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(el);
-  });
+    
+    // ==================== الوضع الليلي ====================
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const btn = document.querySelector('.dark-mode-toggle');
+        btn.textContent = document.body.classList.contains('dark-mode') ? '☀️ الوضع النهاري' : '🌙 الوضع الليلي';
+    }
+    
+    // ==================== تغيير اللغة ====================
+    function changeLanguage(lang) {
+        language = lang;
+        document.getElementById('main-title').textContent = translations[lang].mainTitle;
+        // يمكن إضافة المزيد من الترجمات هنا
+    }
+    
+    // ==================== المؤقت ====================
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            if (timerSeconds > 0) {
+                timerSeconds--;
+                updateTimerDisplay();
+                
+                // تنبيه عند انتهاء المدة
+                if (timerSeconds === 0) {
+                    alert('✅ انتهت فترة الانتظار! يمكنك تناول الطعام الآن');
+                    playNotification();
+                }
+            }
+        }, 1000);
+    }
+    
+    function pauseTimer() {
+        clearInterval(timerInterval);
+    }
+    
+    function resetTimer() {
+        clearInterval(timerInterval);
+        timerSeconds = 2700;
+        updateTimerDisplay();
+    }
+    
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timerSeconds / 60);
+        const seconds = timerSeconds % 60;
+        document.getElementById('timer').textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    
+    // ==================== تحديث التقدم ====================
+    function updateProgress() {
+        const activity = parseInt(document.getElementById('activity').value) || 0;
+        const targetActivity = 45;
+        const activityPercent = Math.min((activity / targetActivity) * 100, 100);
+        
+        document.getElementById('activity-fill').style.width = activityPercent + '%';
+        document.getElementById('activity-fill').textContent = activity + ' دقيقة';
+        document.getElementById('activity-percent').textContent = Math.round(activityPercent) + '%';
+        
+        // تحديث النقاط
+        if (activity >= targetActivity) {
+            addPoints(50);
+        }
+    }
+    
+    function updateWaterNeeded() {
+        const weight = parseFloat(document.getElementById('weight').value) || 130;
+        const waterNeeded = (weight * 0.033).toFixed(1); // 33 مل لكل كجم
+        
+        const waterProgress = document.querySelector('#water-progress .progress-fill');
+        const waterPercent = document.getElementById('water-percent');
+        
+        // نفترض أن المستخدم أدخل كمية الماء التي شربها
+        const waterDrank = waterNeeded * 0.7; // 70% افتراضياً
+        
+        const percent = (waterDrank / waterNeeded) * 100;
+        waterProgress.style.width = percent + '%';
+        waterProgress.textContent = waterDrank.toFixed(1) + '/' + waterNeeded + ' لتر';
+        waterPercent.textContent = Math.round(percent) + '%';
+    }
+    
+    // ==================== تحديث الرسم البياني ====================
+    function updateChart() {
+        const chart = document.getElementById('sugar-chart');
+        chart.innerHTML = '';
+        
+        // بيانات تجريبية
+        const sugarLevels = [145, 138, 156, 149, 152, 140, 135];
+        const days = ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
+        
+        sugarLevels.forEach((level, index) => {
+            const bar = document.createElement('div');
+            bar.className = 'chart-bar';
+            bar.style.height = (level / 2) + 'px';
+            bar.setAttribute('data-value', level);
+            chart.appendChild(bar);
+            
+            const label = document.createElement('div');
+            label.className = 'chart-label';
+            label.textContent = days[index].substring(0, 2);
+            bar.appendChild(label);
+        });
+    }
+    
+    // ==================== نظام النقاط ====================
+    function addPoints(pointsToAdd) {
+        points += pointsToAdd;
+        document.getElementById('points').textContent = points;
+        
+        // التحقق من الشارات
+        checkBadges();
+    }
+    
+    function checkBadges() {
+        if (points >= 2000) {
+            earnBadge('الانتظام');
+        }
+        // المزيد من الشروط...
+    }
+    
+    function earnBadge(badgeName) {
+        const badges = document.querySelectorAll('.badge');
+        badges.forEach(badge => {
+            if (badge.textContent.includes(badgeName)) {
+                badge.classList.add('earned');
+                playNotification();
+            }
+        });
+    }
+    
+    function showBadgeInfo(badgeName) {
+        alert(`شارة ${badgeName}: تحصل عليها عند الالتزام بهذا النشاط لمدة أسبوع`);
+    }
+    
+    // ==================== المساعد الصحي ====================
+    function sendMessage() {
+        const input = document.getElementById('chat-input');
+        const message = input.value.trim();
+        if (!message) return;
+        
+        const chatMessages = document.getElementById('chat-messages');
+        
+        // رسالة المستخدم
+        const userDiv = document.createElement('div');
+        userDiv.className = 'chat-message user-message';
+        userDiv.textContent = message;
+        chatMessages.appendChild(userDiv);
+        
+        // رد المساعد
+        setTimeout(() => {
+            const botDiv = document.createElement('div');
+            botDiv.className = 'chat-message bot-message';
+            botDiv.textContent = getBotResponse(message);
+            chatMessages.appendChild(botDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 500);
+        
+        input.value = '';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    function getBotResponse(message) {
+        const responses = {
+            'سكر': 'يجب أن يكون مستوى السكر بين 80-130 قبل الأكل وأقل من 180 بعد الأكل بساعتين',
+            'دواء': 'تناول Euthyrox الساعة 6:00 والميتفورمين مع الأكل 6:45',
+            'وزن': 'هدفنا إنقاص 5-7 كجم هذا الشهر. استمر في الالتزام',
+            'اكل': 'ركز على البروتين والخضروات وتجنب السكريات والنشويات'
+        };
+        
+        for (let key in responses) {
+            if (message.includes(key)) {
+                return responses[key];
+            }
+        }
+        
+        return 'شكراً لسؤالك. أنا هنا لمساعدتك في متابعة حالتك الصحية. هل تريد معرفة المزيد عن نظامك الغذائي أو الدواء؟';
+    }
+    
+    // ==================== تحديث إجهاد حراري ====================
+    function updateHeatStress() {
+        const temp = parseFloat(document.getElementById('temperature').value) || 25;
+        const heatLevel = document.getElementById('heat-stress-level');
+        
+        if (temp > 35) {
+            heatLevel.textContent = 'مرتفع جداً - خطر';
+            heatLevel.style.color = '#ff6b6b';
+        } else if (temp > 30) {
+            heatLevel.textContent = 'مرتفع';
+            heatLevel.style.color = '#f39c12';
+        } else if (temp > 25) {
+            heatLevel.textContent = 'متوسط';
+            heatLevel.style.color = '#f1c40f';
+        } else {
+            heatLevel.textContent = 'منخفض - آمن';
+            heatLevel.style.color = '#2ecc71';
+        }
+    }
+    
+    // ==================== تحديث بيانات النوم ====================
+    function updateSleepStats() {
+        const hours = document.getElementById('sleep-hours').value;
+        const deep = document.getElementById('deep-sleep').value;
+        const wakes = document.getElementById('wake-ups').value;
+        
+        // توصية ذكية بناءً على جودة النوم
+        if (hours < 6) {
+            showRecommendation('نومك قليل جداً. حاول النوم مبكراً لتحسين حساسية الأنسولين');
+        } else if (deep < 1.5) {
+            showRecommendation('النوم العميق قليل. جرب تقنيات الاسترخاء قبل النوم');
+        }
+    }
+    
+    // ==================== توصيات ذكية ====================
+    function showRecommendation(text) {
+        document.getElementById('recommendation-text').textContent = text;
+    }
+    
+    function updateHealthData() {
+        const sugar = parseFloat(document.getElementById('sugar-level').value);
+        
+        if (sugar > 180) {
+            showRecommendation('⚠️ ارتفاع في السكر. تأكد من جرعة الدواء وقلل الكربوهيدرات');
+            addPoints(-50); // خصم نقاط
+        } else if (sugar < 70) {
+            showRecommendation('🚨 انخفاض السكر! تناول مصدر سكر سريع فوراً');
+            emergencyCall();
+        } else {
+            showRecommendation('مستوى السكر ممتاز. استمر في الالتزام');
+            addPoints(100);
+        }
+    }
+    
+    // ==================== تسجيل الوجبات ====================
+    function saveMeal(button) {
+        const recipe = button.parentElement;
+        const recipeName = recipe.querySelector('h3').textContent;
+        
+        // محاكاة تصوير
+        alert(`تم تسجيل وجبة ${recipeName}`);
+        addPoints(30);
+    }
+    
+    // ==================== مزامنة الأجهزة ====================
+    function syncDevice(device) {
+        document.getElementById('sync-time').textContent = new Date().toLocaleTimeString();
+        
+        const messages = {
+            'apple': 'تمت المزامنة مع Apple Health بنجاح',
+            'samsung': 'تمت المزامنة مع Samsung Health بنجاح',
+            'fitbit': 'تمت المزامنة مع Fitbit بنجاح',
+            'glucose': 'تم استيراد قراءات السكر من الجهاز'
+        };
+        
+        alert(messages[device]);
+    }
+    
+    // ==================== تقارير PDF ====================
+    function generatePDF() {
+        alert('جاري تحضير تقرير الأسبوع...');
+        
+        // محاكاة إنشاء PDF
+        setTimeout(() => {
+            alert('✅ تم تحميل التقرير بنجاح');
+            addPoints(200);
+        }, 2000);
+    }
+    
+    function shareWithDoctor() {
+        alert('تم إرسال التقرير إلى عيادة الدكتور مادح محمد');
+    }
+    
+    // ==================== زر الطوارئ ====================
+    function emergencyCall() {
+        if (confirm('هل تريد الاتصال بالطوارئ الطبية؟')) {
+            window.location.href = 'tel:997';
+        }
+    }
+    
+    // ==================== النسخ الاحتياطي ====================
+    function backupData() {
+        const data = {
+            sugar: document.getElementById('sugar-level').value,
+            weight: document.getElementById('weight').value,
+            points: points,
+            timestamp: new Date()
+        };
+        
+        localStorage.setItem('healthData', JSON.stringify(data));
+        alert('تم حفظ البيانات في السحابة');
+    }
+    
+    function restoreData() {
+        const data = localStorage.getItem('healthData');
+        if (data) {
+            const parsed = JSON.parse(data);
+            document.getElementById('sugar-level').value = parsed.sugar;
+            document.getElementById('weight').value = parsed.weight;
+            points = parsed.points;
+            document.getElementById('points').textContent = points;
+            alert('تم استعادة البيانات بنجاح');
+        }
+    }
+    
+    // ==================== الأمان ====================
+    function enableFingerprint() {
+        if (window.PublicKeyCredential) {
+            alert('تم تفعيل الدخول بالبصمة');
+        } else {
+            alert('جهازك لا يدعم البصمة، يمكن استخدام رمز PIN');
+        }
+    }
+    
+    function encryptData() {
+        alert('جميع بياناتك مشفرة وآمنة');
+    }
+    
+    // ==================== الإشعارات ====================
+    function playNotification() {
+        // محاكاة صوت إشعار
+        console.log('🔔 Notification');
+        
+        // إظهار إشعار في المتصفح
+        if (Notification.permission === 'granted') {
+            new Notification('تذكير صحي', {
+                body: 'حان وقت المتابعة',
+                icon: '🔔'
+            });
+        }
+    }
+    
+    // ==================== طلب إذن الإشعارات ====================
+    if (Notification.permission !== 'granted') {
+        Notification.requestPermission();
+    }
+    
+    // ==================== التنبؤ بالذكاء الاصطناعي ====================
+    function predictFutureSugar() {
+        const currentSugar = parseFloat(document.getElementById('sugar-level').value) || 140;
+        const activity = parseFloat(document.getElementById('activity').value) || 0;
+        const sleepHours = parseFloat(document.getElementById('sleep-hours').value) || 7;
+        
+        // خوارزمية تنبؤ بسيطة
+        let predictedSugar = currentSugar;
+        
+        if (activity > 30) predictedSugar -= 10;
+        if (sleepHours < 6) predictedSugar += 15;
+        
+        return predictedSugar;
+    }
+    
+    // ==================== تهيئة الصفحة ====================
+    window.onload = function() {
+        updateChart();
+        updateWaterNeeded();
+        updateHeatStress();
+        resetTimer();
+        
+        // استعادة البيانات المحفوظة
+        restoreData();
+        
+        // إشعار ترحيبي
+        setTimeout(() => {
+            playNotification();
+        }, 1000);
+    };
 </script>
 
 </body>
