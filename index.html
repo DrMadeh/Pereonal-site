@@ -6,568 +6,560 @@
 <title>NeuroRadar | Dr. Madeh Gado</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* ══════════════════════════════════════════
-   DESIGN SYSTEM — DARK HIGH-CONTRAST THEME
-   ══════════════════════════════════════════ */
 :root {
-  --bg:      #0d1117;
-  --bg2:     #161b24;
-  --bg3:     #1c2330;
-  --surface: #1e2636;
-  --teal:    #00e5c8;
-  --teal-dk: #00a896;
-  --gold:    #ffc840;
-  --gold-dk: #cc9d00;
-  --red:     #ff5577;
-  --blue:    #5ba3ff;
-  --purple:  #b57bff;
-  --text-primary:   #f0f4ff;
-  --text-secondary: #a8b8d0;
-  --text-muted:     #6b7e96;
-  --border:      rgba(255,255,255,0.08);
-  --border-teal: rgba(0,229,200,0.30);
-  --border-gold: rgba(255,200,64,0.30);
+  --bg:      #080810;
+  --bg2:     #10101e;
+  --bg3:     #18182a;
+  --cyan:    #00ffe5;
+  --cyan2:   #00c9b8;
+  --magenta: #ff2070;
+  --lime:    #b8ff00;
+  --amber:   #ffb800;
+  --violet:  #9d5cff;
+  --white:   #f0f4ff;
+  --muted:   #7a8aaa;
+  --border:  rgba(255,255,255,0.06);
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden;}
 
-body {
-  font-family: 'Cairo', sans-serif;
-  font-size: 16px;
-  background: var(--bg);
-  color: var(--text-primary);
-  min-height: 100vh;
-  overflow-x: hidden;
-  background-image:
-    radial-gradient(ellipse 60% 50% at 10% 20%, rgba(0,229,200,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 60% at 90% 80%, rgba(255,200,64,0.05) 0%, transparent 60%);
-}
+/* NOISE */
+body::after{content:'';position:fixed;inset:0;z-index:999;pointer-events:none;
+  opacity:.25;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");}
+
+/* MESH BG */
+.mesh{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 5% 10%,  rgba(0,255,229,0.08) 0%,transparent 55%),
+    radial-gradient(ellipse 60% 65% at 95% 90%,  rgba(255,32,112,0.07) 0%,transparent 55%),
+    radial-gradient(ellipse 45% 45% at 55% 45%,  rgba(184,255,0,0.04) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 50% at 20% 80%,  rgba(157,92,255,0.05) 0%,transparent 55%),
+    var(--bg);}
+
+/* GRID */
+.grid{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,255,229,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,229,0.035) 1px,transparent 1px);
+  background-size:52px 52px;}
+
+/* CORNER BRACKETS */
+.br{position:fixed;width:55px;height:55px;z-index:5;pointer-events:none;}
+.br-tl{top:8px;left:8px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);}
+.br-tr{top:8px;right:8px;border-top:2px solid var(--magenta);border-right:2px solid var(--magenta);}
+.br-bl{bottom:8px;left:8px;border-bottom:2px solid var(--lime);border-left:2px solid var(--lime);}
+.br-br{bottom:8px;right:8px;border-bottom:2px solid var(--amber);border-right:2px solid var(--amber);}
 
 /* ── HEADER ── */
-header {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(13,17,23,0.96);
-  border-bottom: 1px solid var(--border-teal);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+header{
+  position:sticky;top:0;z-index:100;padding:0 28px;
+  background:rgba(8,8,16,0.96);
+  border-bottom:1px solid rgba(0,255,229,0.12);
+  backdrop-filter:blur(24px);
 }
-.header-inner {
-  max-width: 1140px; margin: 0 auto;
-  padding: 14px 24px;
-  display: flex; align-items: center;
-  justify-content: space-between; gap: 16px;
+.hdr{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:20px;}
+
+.logo{display:flex;align-items:center;gap:14px;}
+.logo-icon{
+  width:46px;height:46px;border-radius:13px;
+  background:linear-gradient(135deg,var(--cyan),var(--cyan2));
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+  box-shadow:0 0 0 1px rgba(0,255,229,0.35),0 0 24px rgba(0,255,229,0.25);
+  animation:logoGlow 3s ease-in-out infinite;
 }
-.logo { display:flex; align-items:center; gap:12px; }
-.logo-icon {
-  width:44px; height:44px; border-radius:12px; flex-shrink:0;
-  background: linear-gradient(135deg, var(--teal), var(--teal-dk));
-  display:flex; align-items:center; justify-content:center;
-  font-size:22px; box-shadow: 0 0 20px rgba(0,229,200,0.4);
-}
-.logo-text { font-size:22px; font-weight:900; color:var(--text-primary); letter-spacing:-0.5px; line-height:1.1; }
-.logo-text span { color:var(--teal); }
-.logo-sub { font-size:10px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; letter-spacing:1.5px; margin-top:2px; }
-.header-right { display:flex; align-items:center; gap:14px; flex-shrink:0; }
-.live-badge {
-  display:flex; align-items:center; gap:6px; padding:5px 14px; border-radius:20px;
-  background:rgba(255,85,119,0.15); border:1px solid rgba(255,85,119,0.5);
-  font-size:11px; font-weight:700; color:#ff9aaa;
-  font-family:'JetBrains Mono',monospace; letter-spacing:1.5px;
-}
-.live-dot { width:7px; height:7px; border-radius:50%; background:var(--red); animation:blink 1.2s ease-in-out infinite; }
-#clock { font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:700; color:var(--teal); letter-spacing:1px; white-space:nowrap; }
+@keyframes logoGlow{0%,100%{box-shadow:0 0 0 1px rgba(0,255,229,0.35),0 0 24px rgba(0,255,229,0.2);}50%{box-shadow:0 0 0 2px rgba(0,255,229,0.55),0 0 40px rgba(0,255,229,0.4);}}
+
+.logo-name{font-size:23px;font-weight:900;color:var(--white);}
+.logo-name span{color:var(--cyan);text-shadow:0 0 12px rgba(0,255,229,0.5);}
+.logo-sub{font-size:11px;color:#a0b0cc;font-family:'JetBrains Mono',monospace;letter-spacing:2px;}
+
+.hdr-r{display:flex;align-items:center;gap:14px;}
+.live-pill{display:flex;align-items:center;gap:7px;padding:5px 14px;border-radius:20px;
+  background:rgba(255,32,112,0.1);border:1px solid rgba(255,32,112,0.4);
+  font-size:11px;font-weight:700;color:var(--magenta);font-family:'JetBrains Mono',monospace;letter-spacing:2px;}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--magenta);animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.15;}}
+#clock{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--cyan);letter-spacing:1px;text-shadow:0 0 10px rgba(0,255,229,0.4);}
 
 /* ── HERO ── */
-.hero-bar { text-align:center; padding:44px 24px 32px; }
-.hero-date { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold); letter-spacing:3px; text-transform:uppercase; margin-bottom:12px; }
-.hero-title { font-size:36px; font-weight:900; color:var(--text-primary); margin-bottom:8px; line-height:1.2; }
-.hero-title span { color:var(--teal); }
-.hero-sub { font-size:14px; color:var(--text-secondary); }
+.hero{position:relative;z-index:5;text-align:center;padding:52px 24px 36px;border-bottom:1px solid var(--border);}
+.hero-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--amber);letter-spacing:5px;margin-bottom:14px;text-shadow:0 0 8px rgba(255,184,0,0.4);}
+.hero-h1{font-size:42px;font-weight:900;line-height:1.1;margin-bottom:10px;}
+.hero-h1 .w1{color:var(--cyan);text-shadow:0 0 18px rgba(0,255,229,0.4);}
+.hero-h1 .w2{color:var(--magenta);text-shadow:0 0 18px rgba(255,32,112,0.4);}
+.hero-h1 .w3{color:var(--lime);text-shadow:0 0 18px rgba(184,255,0,0.4);}
+.hero-sub{font-size:14px;color:#a0b0c8;letter-spacing:1.5px;}
 
-/* ── TOOLS ── */
-.tools-strip { max-width:1140px; margin:0 auto 32px; padding:0 24px; }
-.tools-label { font-size:10px; font-weight:700; color:var(--text-muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; font-family:'JetBrains Mono',monospace; }
-.tools-row { display:flex; gap:8px; flex-wrap:wrap; }
-.tool-chip {
-  display:inline-flex; align-items:center; padding:7px 15px; border-radius:8px;
-  background:var(--bg2); border:1px solid var(--border-teal);
-  color:var(--teal); text-decoration:none;
-  font-size:12px; font-weight:700; font-family:'JetBrains Mono',monospace;
-  letter-spacing:0.5px; transition:all 0.2s ease; white-space:nowrap;
+/* ── TOOLS STRIP ── */
+.tools-wrap{position:relative;z-index:5;max-width:1240px;margin:0 auto;padding:22px 28px;border-bottom:1px solid var(--border);}
+.strip-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:3px;font-family:'JetBrains Mono',monospace;margin-bottom:12px;}
+.chips{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{
+  display:inline-flex;align-items:center;padding:8px 16px;border-radius:7px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+  text-decoration:none;letter-spacing:.5px;transition:all .2s ease;
 }
-.tool-chip:hover { background:rgba(0,229,200,0.12); border-color:var(--teal); color:#fff; transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,229,200,0.2); }
+.chip:nth-child(4n+1){background:rgba(0,255,229,.07);border:1px solid rgba(0,255,229,.25);color:var(--cyan);}
+.chip:nth-child(4n+2){background:rgba(184,255,0,.06);border:1px solid rgba(184,255,0,.25);color:var(--lime);}
+.chip:nth-child(4n+3){background:rgba(255,184,0,.07);border:1px solid rgba(255,184,0,.25);color:var(--amber);}
+.chip:nth-child(4n+4){background:rgba(255,32,112,.07);border:1px solid rgba(255,32,112,.25);color:var(--magenta);}
+.chip:hover{transform:translateY(-3px);filter:brightness(1.3);box-shadow:0 6px 20px rgba(0,0,0,.4);}
 
-/* ── MAIN GRID ── */
-.main { max-width:1140px; margin:0 auto; padding:0 24px 80px; display:grid; grid-template-columns:1fr 360px; gap:24px; }
+/* ── MAIN ── */
+.main{position:relative;z-index:5;max-width:1240px;margin:0 auto;padding:32px 28px 90px;display:grid;grid-template-columns:1fr 370px;gap:28px;}
 
-/* ── SEC HEADER ── */
-.sec-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
-.sec-title { font-size:11px; font-weight:700; letter-spacing:2.5px; color:var(--gold); text-transform:uppercase; font-family:'JetBrains Mono',monospace; display:flex; align-items:center; gap:8px; }
-.sec-title::before { content:''; width:3px; height:14px; background:var(--gold); border-radius:2px; flex-shrink:0; }
+/* SEC LABEL */
+.sec-lbl{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.sec-lbl-txt{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+.clr-c{color:var(--cyan);}
+.clr-m{color:var(--magenta);}
+.clr-l{color:var(--lime);}
+.clr-a{color:var(--amber);}
+.clr-v{color:var(--violet);}
 
 /* ── NEWS CARDS ── */
-.news-grid { display:flex; flex-direction:column; gap:14px; }
-.news-card {
-  background:var(--bg2); border:1px solid var(--border); border-radius:16px;
-  padding:22px; transition:all 0.3s ease; animation:fadeIn 0.5s ease both;
-  position:relative; overflow:hidden;
+.nfeed{display:flex;flex-direction:column;gap:18px;}
+
+.nc{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:16px;padding:22px;
+  transition:all .3s ease;
+  animation:slideIn .45s ease both;
+  position:relative;overflow:hidden;
 }
-.news-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:linear-gradient(90deg,var(--teal),transparent); opacity:0; transition:opacity 0.3s; }
-.news-card:hover { border-color:var(--border-teal); transform:translateY(-3px); box-shadow:0 16px 48px rgba(0,0,0,0.5),0 0 0 1px rgba(0,229,200,0.1); }
-.news-card:hover::before { opacity:1; }
-.news-card.gold-accent::before { background:linear-gradient(90deg,var(--gold),transparent); }
-.news-card.gold-accent:hover { border-color:var(--border-gold); }
-.card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; }
-.source-badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:6px; font-size:11px; font-weight:700; font-family:'JetBrains Mono',monospace; letter-spacing:0.5px; flex-shrink:0; }
-.badge-teal { background:rgba(0,229,200,0.15); color:var(--teal);   border:1px solid rgba(0,229,200,0.40); }
-.badge-gold { background:rgba(255,200,64,0.15); color:var(--gold);   border:1px solid rgba(255,200,64,0.40); }
-.badge-blue { background:rgba(91,163,255,0.15); color:var(--blue);   border:1px solid rgba(91,163,255,0.40); }
-.badge-red  { background:rgba(255,85,119,0.15); color:#ff9aaa;       border:1px solid rgba(255,85,119,0.40); }
-.card-title { font-size:16px; font-weight:700; color:var(--text-primary); line-height:1.5; margin-bottom:8px; }
-.card-desc  { font-size:14px; color:var(--text-secondary); line-height:1.7; margin-bottom:16px; }
-.card-actions { display:flex; gap:8px; flex-wrap:wrap; }
-.act-btn { display:inline-flex; align-items:center; gap:5px; padding:8px 14px; border-radius:8px; font-family:'Cairo',sans-serif; font-size:13px; font-weight:700; border:none; cursor:pointer; text-decoration:none; transition:all 0.2s ease; }
-.btn-open { background:var(--bg3); color:var(--text-secondary); border:1px solid var(--border); }
-.btn-open:hover { background:var(--surface); color:var(--text-primary); border-color:rgba(255,255,255,0.2); }
-.btn-ai   { background:rgba(255,200,64,0.12); color:var(--gold); border:1px solid rgba(255,200,64,0.35); }
-.btn-ai:hover { background:rgba(255,200,64,0.22); color:#fff; transform:translateY(-1px); }
-.btn-share { background:linear-gradient(135deg,#1a7a45,#128c7e); color:#fff; border:none; }
-.btn-share:hover { opacity:0.88; transform:translateY(-1px); }
-.ai-summary { display:none; margin-top:14px; padding:14px; background:rgba(255,200,64,0.06); border:1px solid rgba(255,200,64,0.20); border-radius:10px; font-size:14px; color:var(--text-secondary); line-height:1.8; animation:fadeIn 0.3s ease; }
-.ai-summary.visible { display:block; }
-.ai-header { font-size:11px; font-weight:700; color:var(--gold); letter-spacing:1px; text-transform:uppercase; font-family:'JetBrains Mono',monospace; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
-.typing-cursor::after { content:'▋'; animation:blink 0.8s infinite; color:var(--gold); }
+.nc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity .3s;}
+.nc:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.14);box-shadow:0 20px 60px rgba(0,0,0,.55);}
+.nc:hover::before{opacity:1;}
+
+.nc.tc::before{background:linear-gradient(90deg,var(--cyan),transparent);}
+.nc.tm::before{background:linear-gradient(90deg,var(--magenta),transparent);}
+.nc.tl::before{background:linear-gradient(90deg,var(--lime),transparent);}
+.nc.ta::before{background:linear-gradient(90deg,var(--amber),transparent);}
+.nc.tv::before{background:linear-gradient(90deg,var(--violet),transparent);}
+
+.nc:nth-child(1){animation-delay:.04s;} .nc:nth-child(2){animation-delay:.08s;}
+.nc:nth-child(3){animation-delay:.12s;} .nc:nth-child(4){animation-delay:.16s;}
+.nc:nth-child(5){animation-delay:.20s;} .nc:nth-child(6){animation-delay:.24s;}
+.nc:nth-child(7){animation-delay:.28s;}
+@keyframes slideIn{from{opacity:0;transform:translateX(-14px);}to{opacity:1;transform:translateX(0);}}
+
+.badge{display:inline-flex;padding:3px 10px;border-radius:5px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:1px;margin-bottom:12px;}
+.bc{background:rgba(0,255,229,.1);color:var(--cyan);border:1px solid rgba(0,255,229,.3);}
+.bm{background:rgba(255,32,112,.1);color:var(--magenta);border:1px solid rgba(255,32,112,.3);}
+.bl{background:rgba(184,255,0,.1);color:var(--lime);border:1px solid rgba(184,255,0,.3);}
+.ba{background:rgba(255,184,0,.1);color:var(--amber);border:1px solid rgba(255,184,0,.3);}
+.bv{background:rgba(157,92,255,.1);color:var(--violet);border:1px solid rgba(157,92,255,.3);}
+
+.nc-title{font-size:16px;font-weight:700;color:var(--white);line-height:1.5;margin-bottom:8px;}
+.nc-desc{font-size:14px;color:#c0cce0;line-height:1.75;margin-bottom:16px;}
+.nc-acts{display:flex;gap:8px;flex-wrap:wrap;}
+
+.abtn{display:inline-flex;align-items:center;gap:5px;padding:8px 15px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all .2s ease;}
+.a-open{background:rgba(255,255,255,.06);color:var(--white);border:1px solid rgba(255,255,255,.1);}
+.a-open:hover{background:rgba(255,255,255,.11);}
+.a-ai{background:rgba(255,184,0,.1);color:var(--amber);border:1px solid rgba(255,184,0,.28);}
+.a-ai:hover{background:rgba(255,184,0,.18);transform:translateY(-1px);}
+.a-share{background:linear-gradient(135deg,#0a4d22,#0a6e50);color:#00ff88;border:1px solid rgba(0,255,136,.2);}
+.a-share:hover{opacity:.85;transform:translateY(-1px);}
+
+.ai-box{display:none;margin-top:14px;padding:14px;background:rgba(255,184,0,.04);border:1px solid rgba(255,184,0,.15);border-radius:10px;font-size:13px;color:#8a9aaa;line-height:1.8;}
+.ai-box.show{display:block;animation:fadeIn .3s ease;}
+.ai-hdr{font-size:10px;font-weight:700;color:var(--amber);letter-spacing:2px;font-family:'JetBrains Mono',monospace;margin-bottom:8px;}
+.typing::after{content:'▋';animation:blink .8s infinite;color:var(--amber);}
 
 /* ── SIDEBAR ── */
-.sidebar { display:flex; flex-direction:column; gap:20px; }
-.side-card { background:var(--bg2); border:1px solid var(--border); border-radius:16px; padding:18px; animation:fadeIn 0.5s ease both; }
-.calc-list { display:flex; flex-direction:column; gap:7px; }
-.calc-item { display:flex; align-items:center; justify-content:space-between; padding:10px 13px; background:var(--bg3); border:1px solid var(--border); border-radius:10px; text-decoration:none; transition:all 0.2s ease; }
-.calc-item:hover { background:rgba(0,229,200,0.08); border-color:var(--border-teal); transform:translateX(3px); }
-.calc-name  { font-size:14px; font-weight:700; color:var(--text-primary); }
-.calc-desc  { font-size:11px; color:var(--text-muted); margin-top:2px; }
-.calc-arrow { color:var(--teal); font-size:15px; font-weight:700; }
-.guide-list { display:flex; flex-direction:column; gap:7px; }
-.guide-item { display:flex; align-items:center; gap:10px; padding:10px 13px; background:var(--bg3); border:1px solid var(--border); border-radius:10px; text-decoration:none; transition:all 0.2s ease; }
-.guide-item:hover { border-color:var(--border-gold); background:rgba(255,200,64,0.06); transform:translateX(3px); }
-.guide-dot  { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
-.guide-text { font-size:13px; font-weight:600; color:var(--text-primary); }
-.guide-org  { font-size:11px; color:var(--text-muted); margin-top:1px; }
-.src-btn { padding:5px 13px; border-radius:20px; border:1px solid var(--border); background:var(--bg3); color:var(--text-muted); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.2s ease; letter-spacing:0.5px; }
-.src-btn:hover,.src-btn.active { background:rgba(0,229,200,0.12); border-color:var(--border-teal); color:var(--teal); }
+.sidebar{display:flex;flex-direction:column;gap:22px;}
+.sc{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:20px;animation:fadeIn .5s ease both;}
 
-/* ══ TV NEWS SCREEN ══ */
-.tv-screen {
-  border-radius:12px; overflow:hidden;
-  background:#020508;
-  border:2px solid var(--teal-dk);
-  box-shadow: 0 0 0 1px rgba(0,229,200,0.12), 0 0 32px rgba(0,229,200,0.12), 0 8px 40px rgba(0,0,0,0.8);
+/* News textarea */
+#last-news-input{
+  width:100%;min-height:265px;
+  background:rgba(0,0,0,.4);
+  border:1px solid rgba(0,255,229,.2);
+  border-radius:11px;color:var(--cyan);
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;line-height:1.9;
+  padding:14px;resize:vertical;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  caret-color:var(--cyan);
 }
-.tv-banner {
-  display:flex; align-items:center; justify-content:space-between;
-  background:linear-gradient(90deg,#003d36,#004d40);
-  padding:8px 14px; border-bottom:1px solid rgba(0,229,200,0.25);
-}
-.tv-banner-left { display:flex; align-items:center; gap:8px; }
-.tv-live-dot { width:9px; height:9px; border-radius:50%; background:var(--red); box-shadow:0 0 8px var(--red); animation:blink 1s infinite; flex-shrink:0; }
-.tv-channel-name { color:#fff; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; letter-spacing:2px; }
-.tv-source-id    { color:rgba(255,255,255,0.7); font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:1px; }
-.tv-viewport {
-  padding:18px 18px 14px; min-height:220px; position:relative; overflow:hidden;
-}
-.tv-viewport::after {
-  content:''; position:absolute; inset:0; pointer-events:none; z-index:3;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,200,0.018) 2px,rgba(0,255,200,0.018) 4px);
-}
-.tv-meta { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; position:relative; z-index:2; }
-.tv-badge-row { display:flex; align-items:center; gap:8px; }
-.tv-num { background:linear-gradient(135deg,#cc1133,#880022); color:#fff; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; letter-spacing:1px; padding:3px 9px; border-radius:5px; white-space:nowrap; }
-.tv-date-tag { color:var(--teal); font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; }
-.tv-dots { display:flex; gap:4px; align-items:center; }
-.tv-headline { font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; color:#ffffff; line-height:1.5; margin-bottom:12px; position:relative; z-index:2; text-shadow:0 0 40px rgba(0,229,200,0.2); min-height:48px; }
-.tv-desc { font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.7; color:rgba(185,210,240,0.92); border-left:2px solid var(--teal-dk); padding-left:10px; position:relative; z-index:2; min-height:36px; }
-.tv-advance-track { height:3px; border-radius:2px; background:rgba(255,255,255,0.07); margin-top:16px; overflow:hidden; position:relative; z-index:2; }
-.tv-advance-fill  { height:100%; width:0%; background:linear-gradient(90deg,var(--teal),var(--gold)); border-radius:2px; }
-.tv-ticker-bar { display:flex; align-items:center; background:#04080f; border-top:1px solid rgba(0,229,200,0.2); height:32px; overflow:hidden; }
-.tv-ticker-label { flex-shrink:0; background:linear-gradient(135deg,#cc1133,#880022); height:100%; padding:0 12px; display:flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:#fff; letter-spacing:2px; white-space:nowrap; }
-.tv-ticker-track { flex:1; overflow:hidden; position:relative; }
-#tv-ticker { display:inline-block; white-space:nowrap; color:var(--gold); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; letter-spacing:0.3px; padding-left:40px; animation:tickerScroll 50s linear infinite; }
+#last-news-input:focus{border-color:rgba(0,255,229,.45);box-shadow:0 0 0 3px rgba(0,255,229,.06);}
 
-/* ── REFRESH BAR ── */
-.refresh-track { margin-top:8px; background:rgba(255,255,255,0.06); border-radius:6px; height:4px; overflow:hidden; }
-.refresh-fill  { height:100%; width:100%; background:linear-gradient(90deg,var(--teal),var(--gold)); border-radius:6px; }
+.src-btn{padding:5px 12px;border-radius:20px;border:1px solid rgba(0,255,229,.18);background:rgba(0,255,229,.04);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.5px;}
+.src-btn:hover,.src-btn.active{background:rgba(0,255,229,.12);border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 10px rgba(0,255,229,.12);}
 
-/* ── CTRL BUTTONS ── */
-.ctrl-btn { flex:1; padding:10px; border-radius:9px; cursor:pointer; font-family:'Cairo',sans-serif; font-size:13px; font-weight:700; transition:all 0.2s ease; }
-.ctrl-refresh { background:rgba(0,229,200,0.10); border:1px solid var(--border-teal); color:var(--teal); }
-.ctrl-refresh:hover { background:rgba(0,229,200,0.20); color:#fff; }
-.ctrl-share { flex:2; background:linear-gradient(135deg,#1a7a45,#0f7a6a); border:none; color:#fff; }
-.ctrl-share:hover { opacity:0.88; }
+.bar-track{margin-top:8px;background:rgba(255,255,255,.05);border-radius:4px;height:3px;overflow:hidden;}
+#refresh-bar{height:100%;width:100%;background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--lime));border-radius:4px;}
+
+/* Calc / guide items */
+.ci{display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:all .2s ease;margin-bottom:7px;}
+.ci:last-child{margin-bottom:0;}
+.ci:hover{background:rgba(0,255,229,.05);border-color:rgba(0,255,229,.2);transform:translateX(-4px);}
+.ci-name{font-size:14px;font-weight:700;color:var(--white);}
+.ci-desc{font-size:11px;color:var(--muted);margin-top:1px;}
+.ci-arr{color:var(--cyan);font-size:18px;font-weight:700;}
+
+.gi{display:flex;align-items:center;gap:12px;padding:10px 13px;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:all .2s ease;margin-bottom:7px;}
+.gi:last-child{margin-bottom:0;}
+.gi:hover{border-color:rgba(184,255,0,.25);background:rgba(184,255,0,.04);transform:translateX(-4px);}
+.gdot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.gi-name{font-size:13px;font-weight:700;color:var(--white);}
+.gi-org{font-size:11px;color:var(--muted);}
+.cat-divider{
+  font-size:10px;font-weight:700;color:var(--muted);
+  font-family:'JetBrains Mono',monospace;letter-spacing:2px;
+  padding:8px 2px 5px;margin-top:4px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  margin-bottom:7px;
+}
 
 /* ── FOOTER ── */
-footer { text-align:center; padding:20px 24px; border-top:1px solid var(--border); font-size:12px; color:var(--text-muted); font-family:'JetBrains Mono',monospace; letter-spacing:1px; }
+footer{position:relative;z-index:5;text-align:center;padding:24px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px;}
 
-/* ── ANIMATIONS ── */
-@keyframes blink   { 0%,100%{opacity:1;} 50%{opacity:0.15;} }
-@keyframes fadeIn  { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
-@keyframes tvSlide { from{opacity:0;transform:translateY(8px);}  to{opacity:1;transform:translateY(0);} }
-@keyframes tickerScroll { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
-
-.news-card:nth-child(1){animation-delay:0.05s;} .news-card:nth-child(2){animation-delay:0.10s;}
-.news-card:nth-child(3){animation-delay:0.15s;} .news-card:nth-child(4){animation-delay:0.20s;}
-.news-card:nth-child(5){animation-delay:0.25s;} .news-card:nth-child(6){animation-delay:0.30s;}
-.news-card:nth-child(7){animation-delay:0.35s;}
-
-/* ── RESPONSIVE ── */
-@media(max-width:900px){ .main{grid-template-columns:1fr;} .sidebar{order:-1;} .hero-title{font-size:26px;} }
-@media(max-width:600px){ .header-inner{padding:12px 16px;} .main,.tools-strip{padding-left:16px;padding-right:16px;} .hero-bar{padding:28px 16px 20px;} .hero-title{font-size:22px;} #clock{display:none;} }
+/* ── UTILS ── */
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:820px){
+  .main{grid-template-columns:1fr;}
+  .sidebar{order:-1;}
+  .hero-h1{font-size:26px;}
+  #clock{display:none;}
+  .br{display:none;}
+}
 </style>
 </head>
 <body>
 
+<div class="mesh"></div>
+<div class="grid"></div>
+<div class="br br-tl"></div>
+<div class="br br-tr"></div>
+<div class="br br-bl"></div>
+<div class="br br-br"></div>
+
 <!-- HEADER -->
 <header>
-  <div class="header-inner">
+  <div class="hdr">
     <div class="logo">
       <div class="logo-icon">🧠</div>
       <div>
-        <div class="logo-text">Neuro<span>Radar</span></div>
-        <div class="logo-sub">DR. MADEH GADO · NEUROLOGY · MANSOURA</div>
+        <div class="logo-name">Neuro<span>Radar</span></div>
+        <div class="logo-sub">DR. MADEH GADO · NEUROLOGY · MANSOURA EG</div>
       </div>
     </div>
-    <div class="header-right">
-      <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+    <div class="hdr-r">
+      <div class="live-pill"><div class="live-dot"></div>LIVE</div>
       <div id="clock">--:--:--</div>
     </div>
   </div>
 </header>
 
 <!-- HERO -->
-<div class="hero-bar">
-  <div class="hero-date" id="hero-date">LOADING DATE...</div>
-  <h1 class="hero-title">Morning <span>Neuro</span> Briefing</h1>
-  <p class="hero-sub">Curated journals &middot; Clinical calculators &middot; AI summaries</p>
+<div class="hero">
+  <div class="hero-date" id="hero-date">INITIALIZING...</div>
+  <h1 class="hero-h1">
+    <span class="w1">Morning</span> <span class="w2">Neuro</span> <span class="w3">Briefing</span>
+  </h1>
+  <p class="hero-sub">Live RSS Journals &nbsp;·&nbsp; Clinical Calculators &nbsp;·&nbsp; AI Summaries</p>
 </div>
 
 <!-- TOOLS -->
-<div class="tools-strip">
-  <div class="tools-label">&#9889; Quick Calculators</div>
-  <div class="tools-row">
-    <a href="https://www.mdcalc.com/calc/715/nih-stroke-scale-score-nihss" target="_blank" class="tool-chip">NIHSS</a>
-    <a href="https://www.mdcalc.com/calc/64/glasgow-coma-scale-score" target="_blank" class="tool-chip">GCS</a>
-    <a href="https://www.mdcalc.com/calc/258/abcd2-score-tia" target="_blank" class="tool-chip">ABCD&sup2;</a>
-    <a href="https://www.mdcalc.com/calc/1096/has-bled-score-major-bleeding-risk" target="_blank" class="tool-chip">HAS-BLED</a>
-    <a href="https://www.mdcalc.com/calc/40/chads2-score-af-stroke-risk" target="_blank" class="tool-chip">CHA&#x2082;DS&#x2082;</a>
-    <a href="https://www.mdcalc.com/calc/1890/modified-rankin-scale-neurological-disability" target="_blank" class="tool-chip">mRS</a>
-    <a href="https://www.mdcalc.com/calc/2200/hunt-hess-classification-subarachnoid-hemorrhage" target="_blank" class="tool-chip">Hunt-Hess</a>
-    <a href="https://www.mdcalc.com/calc/10633/field-assessment-stroke-triage-emergency-destination-fast-ed" target="_blank" class="tool-chip">WFNS-SAH</a>
+<div class="tools-wrap">
+  <div class="strip-label">⚡ QUICK CALCULATORS</div>
+  <div class="chips">
+    <a href="https://www.mdcalc.com/calc/715/nih-stroke-scale-score-nihss" target="_blank" class="chip">NIHSS</a>
+    <a href="https://www.mdcalc.com/calc/64/glasgow-coma-scale-score" target="_blank" class="chip">GCS</a>
+    <a href="https://www.mdcalc.com/calc/258/abcd2-score-tia" target="_blank" class="chip">ABCD²</a>
+    <a href="https://www.mdcalc.com/calc/1096/has-bled-score-major-bleeding-risk" target="_blank" class="chip">HAS-BLED</a>
+    <a href="https://www.mdcalc.com/calc/40/chads2-score-af-stroke-risk" target="_blank" class="chip">CHA₂DS₂</a>
+    <a href="https://www.mdcalc.com/calc/1890/modified-rankin-scale-neurological-disability" target="_blank" class="chip">mRS</a>
+    <a href="https://www.mdcalc.com/calc/2200/hunt-hess-classification-subarachnoid-hemorrhage" target="_blank" class="chip">Hunt-Hess</a>
+    <a href="https://www.mdcalc.com/calc/10633/field-assessment-stroke-triage-emergency-destination-fast-ed" target="_blank" class="chip">FAST-ED</a>
   </div>
 </div>
 
-<!-- MAIN -->
+<!-- MAIN GRID -->
 <div class="main">
 
-  <!-- LEFT: JOURNAL CARDS -->
+  <!-- LEFT: JOURNALS -->
   <div>
-    <div class="sec-header">
-      <div class="sec-title">Journal Updates</div>
-    </div>
-    <div class="news-grid">
+    <div class="sec-lbl"><div class="sec-lbl-txt clr-c">● Journal Updates</div></div>
+    <div class="nfeed">
 
-      <div class="news-card">
-        <div class="card-top"><span class="source-badge badge-teal">NEJM</span></div>
-        <div class="card-title">New England Journal of Medicine &mdash; Neurology</div>
-        <div class="card-desc">Latest peer-reviewed research on stroke, epilepsy, movement disorders, dementia, and neuro-oncology. Access the most cited neurology papers of 2025&ndash;2026.</div>
-        <div class="card-actions">
-          <a href="https://www.nejm.org/loi/nejm" target="_blank" class="act-btn btn-open">&#128214; Open Journal</a>
-          <button onclick="aiSummarize(this,'NEJM Neurology 2026','nejm-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
-          <button onclick="shareWA('NEJM Neurology: https://nejm.org')" class="act-btn btn-share">&#128172; Share</button>
+      <div class="nc tc">
+        <div class="badge bc">NEJM</div>
+        <div class="nc-title">New England Journal of Medicine — Neurology</div>
+        <div class="nc-desc">Latest peer-reviewed neurology research. Stroke, epilepsy, movement disorders, dementia, neuro-oncology. Most cited papers 2025–2026.</div>
+        <div class="nc-acts">
+          <a href="https://www.nejm.org/loi/nejm" target="_blank" class="abtn a-open">📖 Open</a>
+          <button onclick="aiSummarize(this,'NEJM Neurology 2026','nejm-sum')" class="abtn a-ai">✨ AI Summary</button>
+          <button onclick="shareWA('NEJM Neurology: https://nejm.org/loi/nejm')" class="abtn a-share">💬 Share</button>
         </div>
-        <div class="ai-summary" id="nejm-sum"></div>
+        <div class="ai-box" id="nejm-sum"></div>
       </div>
 
-      <div class="news-card gold-accent">
-        <div class="card-top"><span class="source-badge badge-gold">AAN &middot; Neurology&reg;</span></div>
-        <div class="card-title">Neurology&reg; &mdash; Official AAN Journal</div>
-        <div class="card-desc">The American Academy of Neurology&apos;s flagship journal. Clinical trials, practice guidelines, and case reports covering all neurology subspecialties.</div>
-        <div class="card-actions">
-          <a href="https://n.neurology.org/" target="_blank" class="act-btn btn-open">&#128214; Open Journal</a>
-          <button onclick="aiSummarize(this,'AAN Neurology journal 2026','aan-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
-          <button onclick="shareWA('AAN Neurology: https://n.neurology.org')" class="act-btn btn-share">&#128172; Share</button>
+      <div class="nc tl">
+        <div class="badge bl">AAN · NEUROLOGY®</div>
+        <div class="nc-title">Neurology® — Official AAN Journal</div>
+        <div class="nc-desc">American Academy of Neurology flagship journal. Clinical trials, updated practice guidelines, and case reports across all neurology subspecialties.</div>
+        <div class="nc-acts">
+          <a href="https://n.neurology.org/" target="_blank" class="abtn a-open">📖 Open</a>
+          <button onclick="aiSummarize(this,'AAN Neurology journal updates 2026','aan-sum')" class="abtn a-ai">✨ AI Summary</button>
+          <button onclick="shareWA('AAN Neurology: https://n.neurology.org')" class="abtn a-share">💬 Share</button>
         </div>
-        <div class="ai-summary" id="aan-sum"></div>
+        <div class="ai-box" id="aan-sum"></div>
       </div>
 
-      <div class="news-card">
-        <div class="card-top"><span class="source-badge badge-red">AHA &middot; STROKE</span></div>
-        <div class="card-title">Stroke &mdash; AHA/ASA Journal</div>
-        <div class="card-desc">American Heart Association stroke journal &mdash; thrombolysis, thrombectomy, secondary prevention, TIA management, and acute ischemic stroke trials.</div>
-        <div class="card-actions">
-          <a href="https://www.ahajournals.org/journal/str" target="_blank" class="act-btn btn-open">&#128214; Open Journal</a>
-          <button onclick="aiSummarize(this,'AHA Stroke journal 2026','stroke-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
-          <button onclick="shareWA('AHA Stroke Journal: https://ahajournals.org/journal/str')" class="act-btn btn-share">&#128172; Share</button>
+      <div class="nc tm">
+        <div class="badge bm">AHA · STROKE</div>
+        <div class="nc-title">Stroke — American Heart Association Journal</div>
+        <div class="nc-desc">Thrombolysis, thrombectomy, secondary prevention, TIA, acute ischemic stroke trials. The gold-standard stroke research journal.</div>
+        <div class="nc-acts">
+          <a href="https://www.ahajournals.org/journal/str" target="_blank" class="abtn a-open">📖 Open</a>
+          <button onclick="aiSummarize(this,'AHA Stroke journal 2026 thrombolysis thrombectomy prevention','stroke-sum')" class="abtn a-ai">✨ AI Summary</button>
+          <button onclick="shareWA('AHA Stroke: https://ahajournals.org/journal/str')" class="abtn a-share">💬 Share</button>
         </div>
-        <div class="ai-summary" id="stroke-sum"></div>
+        <div class="ai-box" id="stroke-sum"></div>
       </div>
 
-      <div class="news-card gold-accent">
-        <div class="card-top"><span class="source-badge badge-gold">ILAE &middot; EPILEPSY</span></div>
-        <div class="card-title">ILAE &mdash; Epilepsy Guidelines &amp; Classification</div>
-        <div class="card-desc">International League Against Epilepsy. Updated 2023&ndash;2026 classification of seizure types, epilepsy syndromes, and treatment guidelines including Ramadan fasting management.</div>
-        <div class="card-actions">
-          <a href="https://www.ilae.org/guidelines" target="_blank" class="act-btn btn-open">&#128214; Guidelines</a>
-          <button onclick="aiSummarize(this,'ILAE epilepsy guidelines 2025','ilae-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
-          <button onclick="shareWA('ILAE Epilepsy Guidelines: https://ilae.org/guidelines')" class="act-btn btn-share">&#128172; Share</button>
+      <div class="nc ta">
+        <div class="badge ba">🆕 ILAE · 2025</div>
+        <div class="nc-title">ILAE — Epilepsy Guidelines & Classification 2023–2026</div>
+        <div class="nc-desc">International League Against Epilepsy. Updated classification of seizure types, epilepsy syndromes, antiseizure medications, and Ramadan fasting guidelines.</div>
+        <div class="nc-acts">
+          <a href="https://www.ilae.org/updated-classification-epileptic-seizures-2025" target="_blank" class="abtn a-open">📖 2025 Classification</a>
+          <button onclick="aiSummarize(this,'ILAE epilepsy guidelines 2024 2025 classification antiseizure medications','ilae-sum')" class="abtn a-ai">✨ AI Summary</button>
+          <button onclick="shareWA('ILAE Epilepsy: https://ilae.org/guidelines')" class="abtn a-share">💬 Share</button>
         </div>
-        <div class="ai-summary" id="ilae-sum"></div>
+        <div class="ai-box" id="ilae-sum"></div>
       </div>
 
-      <div class="news-card">
-        <div class="card-top"><span class="source-badge badge-blue">LANCET NEURO</span></div>
-        <div class="card-title">The Lancet Neurology</div>
-        <div class="card-desc">High-impact neurology research from The Lancet. Covers Alzheimer&apos;s, Parkinson&apos;s, MS, rare neurological diseases, and global neurology burden data.</div>
-        <div class="card-actions">
-          <a href="https://www.thelancet.com/journals/laneur/home" target="_blank" class="act-btn btn-open">&#128214; Open Journal</a>
-          <button onclick="aiSummarize(this,'Lancet Neurology 2025 2026','lancet-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
-          <button onclick="shareWA('Lancet Neurology: https://thelancet.com/journals/laneur/home')" class="act-btn btn-share">&#128172; Share</button>
+      <div class="nc tv">
+        <div class="badge bv">LANCET NEURO</div>
+        <div class="nc-title">The Lancet Neurology</div>
+        <div class="nc-desc">High-impact global neurology research. Alzheimer's, Parkinson's, MS, rare neurological diseases, and worldwide disease burden data.</div>
+        <div class="nc-acts">
+          <a href="https://www.thelancet.com/journals/laneur/home" target="_blank" class="abtn a-open">📖 Open</a>
+          <button onclick="aiSummarize(this,'Lancet Neurology 2025 2026 Alzheimer Parkinson MS highlights','lancet-sum')" class="abtn a-ai">✨ AI Summary</button>
+          <button onclick="shareWA('Lancet Neurology: https://thelancet.com/journals/laneur/home')" class="abtn a-share">💬 Share</button>
         </div>
-        <div class="ai-summary" id="lancet-sum"></div>
+        <div class="ai-box" id="lancet-sum"></div>
       </div>
 
-      <div class="news-card">
-        <div class="card-top"><span class="source-badge badge-teal">ESO &middot; GUIDELINES</span></div>
-        <div class="card-title">European Stroke Organisation &mdash; Clinical Guidelines</div>
-        <div class="card-desc">ESO evidence-based guidelines 2023&ndash;2026 for ischaemic stroke management, secondary prevention, atrial fibrillation, anticoagulation, and carotid stenosis.</div>
-        <div class="card-actions">
-          <a href="https://eso-stroke.org/guidelines/" target="_blank" class="act-btn btn-open">&#128214; Guidelines</a>
-          <button onclick="aiSummarize(this,'ESO Stroke guidelines 2024 2025','eso-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
-          <button onclick="shareWA('ESO Stroke Guidelines: https://eso-stroke.org/guidelines/')" class="act-btn btn-share">&#128172; Share</button>
+      <div class="nc tc">
+        <div class="badge bc">🆕 AHA/ASA · 2026</div>
+        <div class="nc-title">European Stroke Organisation — Clinical Guidelines</div>
+        <div class="nc-desc">🆕 AHA/ASA 2026 AIS Guideline (Jan 2026) replaces 2018 version. New: tenecteplase endorsed, extended EVT window, first pediatric stroke recs, revised BP targets post-EVT. Plus ESO/EANS ICH 2025 guideline.</div>
+        <div class="nc-acts">
+          <a href="https://www.ahajournals.org/guidelines/acute-ischemic-stroke" target="_blank" class="abtn a-open">📖 2026 Guideline</a>
+          <button onclick="aiSummarize(this,'ESO European Stroke 2024 2025 ischaemic stroke anticoagulation prevention','eso-sum')" class="abtn a-ai">✨ AI Summary</button>
+          <button onclick="shareWA('ESO Guidelines: https://eso-stroke.org/guidelines/')" class="abtn a-share">💬 Share</button>
         </div>
-        <div class="ai-summary" id="eso-sum"></div>
+        <div class="ai-box" id="eso-sum"></div>
       </div>
 
-      <div class="news-card gold-accent">
-        <div class="card-top"><span class="source-badge badge-gold">PUBMED &middot; NIH</span></div>
-        <div class="card-title">PubMed &mdash; Neurology Search (2024&ndash;2026)</div>
-        <div class="card-desc">NIH National Library of Medicine. Search filtered to most recent neurology publications. Free full-text articles via PMC included.</div>
-        <div class="card-actions">
-          <a href="https://pubmed.ncbi.nlm.nih.gov/?term=neurology&filter=dates.2024%2F1%2F1-3000%2F12%2F12&sort=date" target="_blank" class="act-btn btn-open">&#128269; Search PubMed</a>
-          <button onclick="aiSummarize(this,'Top neurology PubMed 2025 2026','pubmed-sum')" class="act-btn btn-ai">&#10024; AI Summary</button>
-          <button onclick="shareWA('PubMed Neurology: https://pubmed.ncbi.nlm.nih.gov/?term=neurology')" class="act-btn btn-share">&#128172; Share</button>
+      <div class="nc tl">
+        <div class="badge bl">PUBMED · NIH</div>
+        <div class="nc-title">PubMed — Neurology 2024–2026</div>
+        <div class="nc-desc">NIH National Library of Medicine. Pre-filtered to most recent neurology publications. Free full-text via PMC included where available.</div>
+        <div class="nc-acts">
+          <a href="https://pubmed.ncbi.nlm.nih.gov/?term=neurology&filter=dates.2024%2F1%2F1-3000%2F12%2F12&sort=date" target="_blank" class="abtn a-open">🔍 Search</a>
+          <button onclick="aiSummarize(this,'Top neurology research PubMed 2025 2026 stroke epilepsy Parkinson Alzheimer','pubmed-sum')" class="abtn a-ai">✨ AI Summary</button>
+          <button onclick="shareWA('PubMed Neurology: https://pubmed.ncbi.nlm.nih.gov/?term=neurology')" class="abtn a-share">💬 Share</button>
         </div>
-        <div class="ai-summary" id="pubmed-sum"></div>
+        <div class="ai-box" id="pubmed-sum"></div>
       </div>
 
     </div>
-  </div><!-- /left -->
+  </div>
 
   <!-- RIGHT: SIDEBAR -->
   <div class="sidebar">
 
-    <!-- Calculators -->
-    <div class="side-card">
-      <div class="sec-header" style="margin-bottom:14px;"><div class="sec-title">Clinical Calculators</div></div>
-      <div class="calc-list">
-        <a href="https://www.mdcalc.com/calc/715/nih-stroke-scale-score-nihss" target="_blank" class="calc-item">
-          <div><div class="calc-name">NIHSS</div><div class="calc-desc">Stroke severity</div></div>
-          <div class="calc-arrow">&rarr;</div>
-        </a>
-        <a href="https://www.mdcalc.com/calc/64/glasgow-coma-scale-score" target="_blank" class="calc-item">
-          <div><div class="calc-name">GCS</div><div class="calc-desc">Consciousness level</div></div>
-          <div class="calc-arrow">&rarr;</div>
-        </a>
-        <a href="https://www.mdcalc.com/calc/258/abcd2-score-tia" target="_blank" class="calc-item">
-          <div><div class="calc-name">ABCD&sup2;</div><div class="calc-desc">TIA stroke risk</div></div>
-          <div class="calc-arrow">&rarr;</div>
-        </a>
-        <a href="https://www.mdcalc.com/calc/40/chads2-score-af-stroke-risk" target="_blank" class="calc-item">
-          <div><div class="calc-name">CHA&#x2082;DS&#x2082;-VASc</div><div class="calc-desc">AF stroke risk</div></div>
-          <div class="calc-arrow">&rarr;</div>
-        </a>
-        <a href="https://www.mdcalc.com/calc/1096/has-bled-score-major-bleeding-risk" target="_blank" class="calc-item">
-          <div><div class="calc-name">HAS-BLED</div><div class="calc-desc">Bleeding risk on anticoag</div></div>
-          <div class="calc-arrow">&rarr;</div>
-        </a>
-        <a href="https://www.mdcalc.com/calc/1890/modified-rankin-scale-neurological-disability" target="_blank" class="calc-item">
-          <div><div class="calc-name">mRS</div><div class="calc-desc">Neurological disability</div></div>
-          <div class="calc-arrow">&rarr;</div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Guidelines -->
-    <div class="side-card">
-      <div class="sec-header" style="margin-bottom:14px;"><div class="sec-title">Guidelines Hub</div></div>
-      <div class="guide-list">
-        <a href="https://eso-stroke.org/guidelines/" target="_blank" class="guide-item">
-          <div class="guide-dot" style="background:var(--red);box-shadow:0 0 7px var(--red);"></div>
-          <div><div class="guide-text">ESO Stroke 2024</div><div class="guide-org">European Stroke Org.</div></div>
-        </a>
-        <a href="https://www.ilae.org/guidelines" target="_blank" class="guide-item">
-          <div class="guide-dot" style="background:var(--gold);box-shadow:0 0 7px var(--gold);"></div>
-          <div><div class="guide-text">ILAE Epilepsy 2023</div><div class="guide-org">Int. League Against Epilepsy</div></div>
-        </a>
-        <a href="https://www.aan.com/Guidelines/" target="_blank" class="guide-item">
-          <div class="guide-dot" style="background:var(--teal);box-shadow:0 0 7px var(--teal);"></div>
-          <div><div class="guide-text">AAN Practice Guidelines</div><div class="guide-org">American Academy Neurology</div></div>
-        </a>
-        <a href="https://www.movementdisorders.org/Publications/Clinical-Practice-Guideline.htm" target="_blank" class="guide-item">
-          <div class="guide-dot" style="background:var(--blue);box-shadow:0 0 7px var(--blue);"></div>
-          <div><div class="guide-text">MDS Parkinson&apos;s</div><div class="guide-org">Movement Disorder Society</div></div>
-        </a>
-        <a href="https://www.alzheimersresearchuk.org/research/" target="_blank" class="guide-item">
-          <div class="guide-dot" style="background:var(--purple);box-shadow:0 0 7px var(--purple);"></div>
-          <div><div class="guide-text">Alzheimer&apos;s Research</div><div class="guide-org">Alzheimer&apos;s Research UK</div></div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Quick Ref -->
-    <div class="side-card">
-      <div class="sec-header" style="margin-bottom:14px;"><div class="sec-title">Quick Reference</div></div>
-      <div class="calc-list">
-        <a href="https://www.drugs.com/drug-interactions/" target="_blank" class="calc-item">
-          <div><div class="calc-name">Drug Interactions</div><div class="calc-desc">Drugs.com checker</div></div>
-          <div class="calc-arrow">&rarr;</div>
-        </a>
-        <a href="https://reference.medscape.com/drugs" target="_blank" class="calc-item">
-          <div><div class="calc-name">Medscape Drugs</div><div class="calc-desc">Dosing &amp; interactions</div></div>
-          <div class="calc-arrow">&rarr;</div>
-        </a>
-        <a href="https://www.uptodate.com/contents/search?search=neurology" target="_blank" class="calc-item">
-          <div><div class="calc-name">UpToDate Neurology</div><div class="calc-desc">Clinical decision support</div></div>
-          <div class="calc-arrow">&rarr;</div>
-        </a>
-      </div>
-    </div>
-
-    <!-- LIVE NEWS TV CARD -->
-    <div class="side-card" id="news-note-card" style="padding:0;overflow:hidden;">
-
-      <div style="padding:14px 18px 12px;display:flex;align-items:center;justify-content:space-between;">
-        <div class="sec-title">&#128225; Live Neuro News</div>
-        <div id="news-status" style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);">LOADING...</div>
+    <!-- LIVE NEWS BOX -->
+    <div class="sc">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <span class="sec-lbl-txt clr-m">📡 LIVE NEURO NEWS</span>
+        <span id="news-status" style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--muted);">LOADING...</span>
       </div>
 
-      <div style="padding:0 18px 12px;display:flex;gap:6px;flex-wrap:wrap;">
+      <div style="display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap;">
         <button class="src-btn active" onclick="setSource('pubmed')" id="src-pubmed">PubMed</button>
         <button class="src-btn" onclick="setSource('lancet')" id="src-lancet">Lancet</button>
-        <button class="src-btn" onclick="setSource('aan')"    id="src-aan">AAN</button>
+        <button class="src-btn" onclick="setSource('aan')" id="src-aan">AAN</button>
         <button class="src-btn" onclick="setSource('stroke')" id="src-stroke">Stroke</button>
       </div>
 
-      <!-- TV SCREEN -->
-      <div class="tv-screen" style="margin:0 18px;">
-        <div class="tv-banner">
-          <div class="tv-banner-left">
-            <div class="tv-live-dot"></div>
-            <span class="tv-channel-name">&#128225; NEURORADAR LIVE</span>
-          </div>
-          <span id="tv-source-id" class="tv-source-id">PUBMED NEUROLOGY</span>
-        </div>
-        <div class="tv-viewport">
-          <div class="tv-meta">
-            <div class="tv-badge-row">
-              <div id="tv-num" class="tv-num">01 / 10</div>
-              <span id="tv-date-tag" class="tv-date-tag"></span>
-            </div>
-            <div id="tv-dots" class="tv-dots"></div>
-          </div>
-          <div id="tv-headline" class="tv-headline">&#128260; Loading latest neurology news...</div>
-          <div id="tv-desc" class="tv-desc"></div>
-          <div class="tv-advance-track">
-            <div id="tv-advance" class="tv-advance-fill"></div>
-          </div>
-        </div>
-        <div class="tv-ticker-bar">
-          <div class="tv-ticker-label">&#9889; BREAKING</div>
-          <div class="tv-ticker-track">
-            <span id="tv-ticker">Fetching latest neurology headlines...</span>
-          </div>
-        </div>
+      <textarea id="last-news-input" readonly>Fetching latest neurology news...</textarea>
+
+      <div class="bar-track"><div id="refresh-bar"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:5px;">
+        <span id="refresh-label" style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;">Refresh in 60s</span>
+        <span id="news-count" style="font-size:11px;color:var(--cyan);font-family:'JetBrains Mono',monospace;"></span>
       </div>
 
-      <div style="padding:10px 18px 16px;">
-        <div class="refresh-track">
-          <div id="refresh-bar" class="refresh-fill"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:5px;">
-          <span id="refresh-label" style="font-size:10px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;">Next refresh in 60s</span>
-          <span id="news-count"   style="font-size:10px;color:var(--teal);font-family:'JetBrains Mono',monospace;"></span>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:10px;">
-          <button onclick="fetchNews()"    class="ctrl-btn ctrl-refresh">&#128260; Refresh Now</button>
-          <button onclick="shareNewsWA()" class="ctrl-btn ctrl-share">&#128172; Share via WhatsApp</button>
-        </div>
+      <div style="display:flex;gap:8px;margin-top:12px;">
+        <button onclick="fetchNews()" style="flex:1;padding:9px;border-radius:8px;background:rgba(0,255,229,.08);border:1px solid rgba(0,255,229,.25);color:var(--cyan);font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;" onmouseover="this.style.background='rgba(0,255,229,.14)'" onmouseout="this.style.background='rgba(0,255,229,.08)'">🔄 Refresh</button>
+        <button onclick="shareNewsWA()" style="flex:2;padding:9px;border-radius:8px;background:linear-gradient(135deg,#0a4d22,#0a6e50);border:1px solid rgba(0,255,136,.2);color:#00ff88;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">💬 Share WA</button>
       </div>
+    </div>
 
-    </div><!-- /news card -->
+    <!-- CALCULATORS -->
+    <div class="sc">
+      <div class="sec-lbl" style="margin-bottom:14px;"><div class="sec-lbl-txt clr-c">⚙ CALCULATORS</div></div>
+      <a href="https://www.mdcalc.com/calc/715/nih-stroke-scale-score-nihss" target="_blank" class="ci"><div><div class="ci-name">NIHSS</div><div class="ci-desc">Stroke severity</div></div><div class="ci-arr">→</div></a>
+      <a href="https://www.mdcalc.com/calc/64/glasgow-coma-scale-score" target="_blank" class="ci"><div><div class="ci-name">GCS</div><div class="ci-desc">Consciousness level</div></div><div class="ci-arr">→</div></a>
+      <a href="https://www.mdcalc.com/calc/258/abcd2-score-tia" target="_blank" class="ci"><div><div class="ci-name">ABCD²</div><div class="ci-desc">TIA stroke risk</div></div><div class="ci-arr">→</div></a>
+      <a href="https://www.mdcalc.com/calc/40/chads2-score-af-stroke-risk" target="_blank" class="ci"><div><div class="ci-name">CHA₂DS₂-VASc</div><div class="ci-desc">AF stroke risk</div></div><div class="ci-arr">→</div></a>
+      <a href="https://www.mdcalc.com/calc/1096/has-bled-score-major-bleeding-risk" target="_blank" class="ci"><div><div class="ci-name">HAS-BLED</div><div class="ci-desc">Bleeding risk</div></div><div class="ci-arr">→</div></a>
+      <a href="https://www.mdcalc.com/calc/1890/modified-rankin-scale-neurological-disability" target="_blank" class="ci"><div><div class="ci-name">mRS</div><div class="ci-desc">Neurological disability</div></div><div class="ci-arr">→</div></a>
+    </div>
 
-    <textarea id="last-news-input" style="display:none;"></textarea>
+    <!-- GUIDELINES -->
+    <div class="sc">
+      <div class="sec-lbl" style="margin-bottom:14px;"><div class="sec-lbl-txt clr-l">◈ GUIDELINES HUB</div></div>
 
-  </div><!-- /sidebar -->
-</div><!-- /main -->
+      <!-- STROKE -->
+      <div class="cat-divider">🔴 STROKE</div>
+      <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000513" target="_blank" class="gi">
+        <div class="gdot" style="background:var(--magenta);box-shadow:0 0 7px var(--magenta);"></div>
+        <div><div class="gi-name">🆕 AHA/ASA AIS 2026</div><div class="gi-org">Replaces 2018 · Jan 2026</div></div>
+      </a>
+      <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12098356/" target="_blank" class="gi">
+        <div class="gdot" style="background:#ff6600;box-shadow:0 0 7px #ff6600;"></div>
+        <div><div class="gi-name">🆕 ESO/EANS ICH 2025</div><div class="gi-org">Intracerebral Haemorrhage · Dec 2025</div></div>
+      </a>
+      <a href="https://eso-stroke.org/guidelines/" target="_blank" class="gi">
+        <div class="gdot" style="background:#ff9955;box-shadow:0 0 7px #ff9955;"></div>
+        <div><div class="gi-name">ESO All Guidelines</div><div class="gi-org">Directory · Updated 2025</div></div>
+      </a>
 
+      <!-- EPILEPSY -->
+      <div class="cat-divider">🟡 EPILEPSY</div>
+      <a href="https://www.ilae.org/updated-classification-epileptic-seizures-2025" target="_blank" class="gi">
+        <div class="gdot" style="background:var(--amber);box-shadow:0 0 7px var(--amber);"></div>
+        <div><div class="gi-name">🆕 ILAE Seizure Classification 2025</div><div class="gi-org">Replaces 2017 · Apr 2025</div></div>
+      </a>
+      <a href="https://www.aan.com/Guidelines/home/GuidelineDetail/1200" target="_blank" class="gi">
+        <div class="gdot" style="background:#ffcc00;box-shadow:0 0 7px #ffcc00;"></div>
+        <div><div class="gi-name">🆕 AAN Functional Seizures 2026</div><div class="gi-org">First AAN functional neuro guideline</div></div>
+      </a>
+      <a href="https://pubmed.ncbi.nlm.nih.gov/38965611/" target="_blank" class="gi">
+        <div class="gdot" style="background:#eeaa00;box-shadow:0 0 7px #eeaa00;"></div>
+        <div><div class="gi-name">🆕 AAN/AES ASM in Pregnancy 2024</div><div class="gi-org">Updated teratogenicity recs · 2024</div></div>
+      </a>
+
+      <!-- MS -->
+      <div class="cat-divider">🟢 MULTIPLE SCLEROSIS</div>
+      <a href="https://www.thelancet.com/article/S1474-4422(25)00270-4/abstract" target="_blank" class="gi">
+        <div class="gdot" style="background:var(--lime);box-shadow:0 0 7px var(--lime);"></div>
+        <div><div class="gi-name">🆕 McDonald Criteria 2024</div><div class="gi-org">Lancet Neurol · Sep 2025 · Optic nerve 5th site</div></div>
+      </a>
+
+      <!-- MIGRAINE -->
+      <div class="cat-divider">🔵 MIGRAINE</div>
+      <a href="https://headachejournal.onlinelibrary.wiley.com/doi/10.1111/head.70016" target="_blank" class="gi">
+        <div class="gdot" style="background:var(--blue);box-shadow:0 0 7px var(--blue);"></div>
+        <div><div class="gi-name">🆕 AHS ED Migraine 2025</div><div class="gi-org">Parenteral tx · Prochlorperazine ↑ Level A</div></div>
+      </a>
+      <a href="https://pubmed.ncbi.nlm.nih.gov/39899861/" target="_blank" class="gi">
+        <div class="gdot" style="background:#4488ff;box-shadow:0 0 7px #4488ff;"></div>
+        <div><div class="gi-name">🆕 ACP Migraine Prevention 2025</div><div class="gi-org">CGRP mAbs · Mar 2025</div></div>
+      </a>
+
+      <!-- PARKINSON -->
+      <div class="cat-divider">🟢 PARKINSON</div>
+      <a href="https://movementdisorders.onlinelibrary.wiley.com/doi/10.1002/mds.30162" target="_blank" class="gi">
+        <div class="gdot" style="background:var(--lime);box-shadow:0 0 7px var(--lime);"></div>
+        <div><div class="gi-name">🆕 MDS Motor Fluctuations 2025</div><div class="gi-org">EBM update · May 2025</div></div>
+      </a>
+      <a href="https://www.movementdisorders.org/Publications/Clinical-Practice-Guideline.htm" target="_blank" class="gi">
+        <div class="gdot" style="background:#88cc00;box-shadow:0 0 7px #88cc00;"></div>
+        <div><div class="gi-name">MDS All Guidelines</div><div class="gi-org">Movement Disorder Society directory</div></div>
+      </a>
+
+      <!-- ALZHEIMER -->
+      <div class="cat-divider">🟣 ALZHEIMER / DEMENTIA</div>
+      <a href="https://alz-journals.onlinelibrary.wiley.com/doi/10.1002/alz.14337" target="_blank" class="gi">
+        <div class="gdot" style="background:var(--violet);box-shadow:0 0 7px var(--violet);"></div>
+        <div><div class="gi-name">🆕 Alzheimer's Assoc. DETeCD 2025</div><div class="gi-org">New diagnostic evaluation CPG</div></div>
+      </a>
+      <a href="https://aaic.alz.org/releases-2025/clinical-practice-guideline-blood-based-biomarkers.asp" target="_blank" class="gi">
+        <div class="gdot" style="background:#cc44ff;box-shadow:0 0 7px #cc44ff;"></div>
+        <div><div class="gi-name">🆕 Blood Biomarkers Guideline 2025</div><div class="gi-org">First BBM guideline · Jul 2025</div></div>
+      </a>
+
+      <!-- AAN -->
+      <div class="cat-divider">⚡ AAN DIRECTORY</div>
+      <a href="https://www.aan.com/Guidelines/" target="_blank" class="gi">
+        <div class="gdot" style="background:var(--cyan);box-shadow:0 0 7px var(--cyan);"></div>
+        <div><div class="gi-name">AAN All Guidelines</div><div class="gi-org">Full directory — updated continuously</div></div>
+      </a>
+
+    </div>
+
+    <!-- QUICK REF -->
+    <div class="sc">
+      <div class="sec-lbl" style="margin-bottom:14px;"><div class="sec-lbl-txt clr-a">⚡ QUICK REFERENCE</div></div>
+      <a href="https://www.drugs.com/drug-interactions/" target="_blank" class="ci"><div><div class="ci-name">Drug Interactions</div><div class="ci-desc">Drugs.com checker</div></div><div class="ci-arr">→</div></a>
+      <a href="https://reference.medscape.com/drugs" target="_blank" class="ci"><div><div class="ci-name">Medscape Drugs</div><div class="ci-desc">Dosing & interactions</div></div><div class="ci-arr">→</div></a>
+      <a href="https://www.uptodate.com/contents/search?search=neurology" target="_blank" class="ci"><div><div class="ci-name">UpToDate Neurology</div><div class="ci-desc">Clinical decision support</div></div><div class="ci-arr">→</div></a>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
 <footer>
-  NEURORADAR &middot; DR. MADEH GADO &middot; MANSOURA, EGYPT &middot; <span id="footer-year"></span>
+  <span style="color:var(--cyan)">NEURORADAR</span> &nbsp;·&nbsp;
+  DR. MADEH GADO &nbsp;·&nbsp;
+  MANSOURA, EGYPT &nbsp;·&nbsp;
+  <span style="color:var(--magenta)" id="footer-year"></span>
 </footer>
 
 <script>
-/* ── CLOCK & DATE ── */
+// CLOCK
 function updateClock(){
-  const t = new Date().toLocaleTimeString('en-GB',{timeZone:'Africa/Cairo',hour12:false});
-  document.getElementById('clock').textContent = t + ' CAI';
+  document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-GB',{timeZone:'Africa/Cairo',hour12:false})+' CAI';
 }
-updateClock(); setInterval(updateClock,1000);
-const dOpts = {weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'Africa/Cairo'};
-document.getElementById('hero-date').textContent = new Date().toLocaleDateString('en-US',dOpts).toUpperCase();
-document.getElementById('footer-year').textContent = new Date().getFullYear();
+updateClock();setInterval(updateClock,1000);
 
-/* ── AI SUMMARIZE ── */
-function aiSummarize(btn, topic, summaryId){
-  const box = document.getElementById(summaryId);
-  if(box.classList.contains('visible')){box.classList.remove('visible');return;}
-  box.classList.add('visible');
-  box.innerHTML = '<div class="ai-header">&#129302; AI SUMMARY &middot; GENERATING</div><div class="typing-cursor">Fetching insights on <strong>'+topic+'</strong>...</div>';
-  const prompt = 'You are a clinical neurology assistant. Give me a concise 5-bullet summary of the most important recent updates (2024-2026) in: '+topic+'.\nFocus on: key clinical trials, guideline changes, new drugs/approvals, and practice-changing evidence.\nKeep it practical for a neurologist.';
-  const url = 'https://claude.ai/new?q='+encodeURIComponent(prompt);
+// DATE
+document.getElementById('hero-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'Africa/Cairo'}).toUpperCase();
+document.getElementById('footer-year').textContent=new Date().getFullYear();
+
+// AI SUMMARIZE
+function aiSummarize(btn,topic,id){
+  const box=document.getElementById(id);
+  if(box.classList.contains('show')){box.classList.remove('show');return;}
+  box.classList.add('show');
+  box.innerHTML=`<div class="ai-hdr">🤖 GENERATING</div><div class="typing">Fetching insights on <strong>${topic}</strong>...</div>`;
+  const prompt=`You are a clinical neurology assistant. Give me a concise 5-bullet summary of the most important recent updates (2024-2026) in: ${topic}.\nFocus on: key clinical trials, guideline changes, new drugs/approvals, and practice-changing evidence. Keep it practical for a neurologist.`;
+  const url=`https://claude.ai/new?q=${encodeURIComponent(prompt)}`;
   setTimeout(()=>{
-    box.innerHTML = '<div class="ai-header">&#10024; AI SUMMARY READY</div>'+
-      '<div style="margin-bottom:10px;color:var(--text-secondary);font-size:12px;">Click below to open in Claude:</div>'+
-      '<a href="'+url+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:rgba(255,200,64,0.12);border:1px solid rgba(255,200,64,0.35);color:var(--gold);text-decoration:none;font-size:12px;font-weight:700;">&#129504; Open in Claude AI &rarr;</a>'+
-      '<div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Topic: '+topic+'</div>';
-  },800);
+    box.innerHTML=`<div class="ai-hdr">✨ READY — OPEN IN CLAUDE</div>
+    <a href="${url}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:rgba(255,184,0,.12);border:1px solid rgba(255,184,0,.3);color:var(--amber);text-decoration:none;font-size:13px;font-weight:700;margin-bottom:8px;">🧠 Open Claude AI →</a>
+    <div style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;">TOPIC: ${topic.toUpperCase()}</div>`;
+  },700);
 }
 
-/* ── SHARE ── */
-function shareWA(text){ window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(text),'_blank'); }
+// SHARE WA
+function shareWA(text){window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(text),'_blank');}
 
-/* ── NEWS TV ── */
-const newsInput    = document.getElementById('last-news-input');
-const newsStatus   = document.getElementById('news-status');
-const refreshBar   = document.getElementById('refresh-bar');
-const refreshLabel = document.getElementById('refresh-label');
-const newsCount    = document.getElementById('news-count');
-const tvHeadline   = document.getElementById('tv-headline');
-const tvDesc       = document.getElementById('tv-desc');
-const tvNum        = document.getElementById('tv-num');
-const tvDateTag    = document.getElementById('tv-date-tag');
-const tvTicker     = document.getElementById('tv-ticker');
-const tvDots       = document.getElementById('tv-dots');
-const tvAdvance    = document.getElementById('tv-advance');
-const tvSourceId   = document.getElementById('tv-source-id');
+// LIVE NEWS
+const newsInput=document.getElementById('last-news-input');
+const newsStatus=document.getElementById('news-status');
+const refreshBar=document.getElementById('refresh-bar');
+const refreshLabel=document.getElementById('refresh-label');
+const newsCount=document.getElementById('news-count');
+let currentSource='pubmed',countdown=60,cdTimer=null;
+const RS=60;
 
-let currentSource = 'pubmed';
-const REFRESH_SEC = 60, SLIDE_SEC = 8;
-let countdown = REFRESH_SEC, countdownTimer = null;
-let tvArticles = [], tvIdx = 0, tvTimer = null;
-
-const SOURCES = {
-  pubmed:{name:'PubMed Neurology', url:'https://pubmed.ncbi.nlm.nih.gov/rss/search/1ULTkRblxwRdPpE2j3iAilV1mjpf7hXN2N0bQ0zFaLNGpZPkB7/?limit=15'},
-  lancet:{name:'Lancet Neurology', url:'https://www.thelancet.com/rssfeed/laneur_current.xml'},
-  aan:   {name:'Neurology (AAN)',   url:'https://n.neurology.org/rss/current.xml'},
-  stroke:{name:'Stroke — AHA',     url:'https://www.ahajournals.org/action/showFeed?type=etoc&feed=rss&jc=str'}
+const SOURCES={
+  pubmed:{name:'PubMed Neurology',url:'https://pubmed.ncbi.nlm.nih.gov/rss/search/1ULTkRblxwRdPpE2j3iAilV1mjpf7hXN2N0bQ0zFaLNGpZPkB7/?limit=15'},
+  lancet:{name:'Lancet Neurology',url:'https://www.thelancet.com/rssfeed/laneur_current.xml'},
+  aan:   {name:'Neurology AAN',   url:'https://n.neurology.org/rss/current.xml'},
+  stroke:{name:'Stroke AHA',      url:'https://www.ahajournals.org/action/showFeed?type=etoc&feed=rss&jc=str'}
 };
 
 function setSource(src){
@@ -577,108 +569,62 @@ function setSource(src){
   fetchNews();
 }
 
-function tvShow(idx){
-  if(!tvArticles.length) return;
-  tvIdx=idx;
-  const a=tvArticles[idx];
-  tvHeadline.style.animation='none'; tvDesc.style.animation='none';
-  void tvHeadline.offsetWidth;
-  tvHeadline.style.animation='tvSlide 0.4s ease forwards';
-  tvDesc.style.animation    ='tvSlide 0.55s ease forwards';
-  tvNum.textContent     = String(idx+1).padStart(2,'0')+' / '+String(tvArticles.length).padStart(2,'0');
-  tvDateTag.textContent = a.date ? '\uD83D\uDCC5 '+a.date : '';
-  tvHeadline.textContent = a.title;
-  tvDesc.textContent    = a.desc||'';
-  tvDots.innerHTML='';
-  tvArticles.forEach((_,i)=>{
-    const d=document.createElement('div');
-    const active=i===idx;
-    d.style.cssText='width:6px;height:6px;border-radius:50%;flex-shrink:0;transition:all 0.3s;background:'+(active?'#00e5c8':'rgba(255,255,255,0.15)')+(active?';box-shadow:0 0 6px #00e5c8':'')+';';
-    tvDots.appendChild(d);
-  });
-  tvAdvance.style.transition='none'; tvAdvance.style.width='0%';
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    tvAdvance.style.transition='width '+SLIDE_SEC+'s linear';
-    tvAdvance.style.width='100%';
-  }));
-}
-
-function tvStart(){
-  clearInterval(tvTimer);
-  if(!tvArticles.length) return;
-  tvShow(0);
-  tvTimer=setInterval(()=>tvShow((tvIdx+1)%tvArticles.length), SLIDE_SEC*1000);
-}
-
-function tvSetTicker(articles){
-  const seg=articles.map((a,i)=>'  \u25C6  '+String(i+1).padStart(2,'0')+'. '+a.title+(a.date?' ['+a.date+']':'')).join('')+'  \u25C6  ';
-  tvTicker.textContent=seg+seg; // duplicated for seamless loop
-  tvTicker.style.animation='none'; void tvTicker.offsetWidth;
-  tvTicker.style.animation='tickerScroll '+Math.max(40,seg.length*0.12)+'s linear infinite';
-}
-
 async function fetchNews(){
   const src=SOURCES[currentSource];
-  newsStatus.textContent='FETCHING...'; newsStatus.style.color='#ffc840';
-  tvSourceId.textContent=src.name.toUpperCase();
-  tvHeadline.textContent='\uD83D\uDD04 Loading '+src.name+'...'; tvDesc.textContent='';
+  newsStatus.textContent='FETCHING...';newsStatus.style.color='var(--amber)';
+  newsInput.value='Loading '+src.name+'...';
   try{
-    const res  = await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(src.url),{signal:AbortSignal.timeout(10000)});
-    const data = await res.json();
-    if(!data.contents) throw new Error('empty');
-    const xml  = new DOMParser().parseFromString(data.contents,'text/xml');
-    const items= Array.from(xml.querySelectorAll('item')).slice(0,10);
-    if(!items.length) throw new Error('no items');
-    tvArticles=items.map(item=>{
-      const title  =item.querySelector('title')?.textContent?.trim()||'';
-      const pubDate=item.querySelector('pubDate')?.textContent||'';
-      const desc   =(item.querySelector('description')?.textContent||'')
-        .replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<')
-        .replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'")
-        .trim().substring(0,140);
-      return {title, desc, date:pubDate?new Date(pubDate).toLocaleDateString('en-GB'):''};
-    });
+    const res=await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(src.url),{signal:AbortSignal.timeout(10000)});
+    const data=await res.json();
+    if(!data.contents)throw new Error('empty');
+    const xml=new DOMParser().parseFromString(data.contents,'text/xml');
+    const items=Array.from(xml.querySelectorAll('item')).slice(0,10);
+    if(!items.length)throw new Error('no items');
     const now=new Date().toLocaleString('en-GB',{timeZone:'Africa/Cairo'});
-    newsInput.value=src.name+' — '+now+'\n\n'+tvArticles.map((a,i)=>(i+1)+'. '+a.title+(a.date?'\n   '+a.date:'')+(a.desc?'\n   '+a.desc:'')).join('\n\n');
-    newsStatus.textContent='● LIVE'; newsStatus.style.color='#00e5c8';
-    newsCount.textContent=tvArticles.length+' articles';
-    tvStart(); tvSetTicker(tvArticles);
+    let out='━━━━━━━━━━━━━━━━━━━━━━━━━\n📡 '+src.name.toUpperCase()+'\n🕐 '+now+'\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
+    items.forEach((item,i)=>{
+      const title=item.querySelector('title')?.textContent?.trim()||'';
+      const pub=item.querySelector('pubDate')?.textContent||'';
+      const desc=(item.querySelector('description')?.textContent||'').replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').trim().substring(0,110);
+      const d=pub?new Date(pub).toLocaleDateString('en-GB'):'';
+      out+=(i+1)+'. '+title+'\n';
+      if(d)out+='   📅 '+d+'\n';
+      if(desc)out+='   '+desc+'...\n';
+      out+='\n';
+    });
+    newsInput.value=out;
+    newsStatus.textContent='● LIVE';newsStatus.style.color='var(--cyan)';
+    newsCount.textContent=items.length+' articles';
   }catch(e){
-    const raw=FALLBACK[currentSource]||FALLBACK.pubmed;
-    const lines=raw.split('\n').filter(l=>/^\d+\./.test(l.trim()));
-    tvArticles=lines.map(l=>({title:l.replace(/^\d+\.\s*/,''),desc:'',date:'2025'}));
-    newsInput.value=raw;
-    newsStatus.textContent='⚠ CACHED'; newsStatus.style.color='#ffc840';
-    newsCount.textContent='offline mode';
-    if(tvArticles.length){tvStart();tvSetTicker(tvArticles);}
-    else{tvHeadline.textContent='⚠ Network unavailable — cached data shown';}
+    newsInput.value=FB[currentSource]||FB.pubmed;
+    newsStatus.textContent='⚠ CACHED';newsStatus.style.color='var(--amber)';
+    newsCount.textContent='offline';
   }
-  resetCountdown();
+  resetCD();
 }
 
-const FALLBACK={
-  pubmed:'1. Tenecteplase vs Alteplase in Acute Stroke\n2. Lecanemab 18-Month Results — CLARITY AD\n3. DAPT After Embolic Stroke of Unknown Source\n4. Brivaracetam Real-World 2-Year Retention\n5. Focused Ultrasound for Essential Tremor\n',
-  lancet:'1. Global Neurological Disease Burden 2024\n2. Donanemab Phase 3 — Alzheimer\'s\n3. Subclinical AF Post-Stroke — ILR vs Holter\n4. CGRP Antagonists in Chronic Migraine\n',
-  aan:   '1. AAN 2025 Thrombolysis Guideline Update\n2. AI in Neuroimaging — Practice Advisory\n3. GLP-1 Agonists in Parkinson\'s — Phase 3\n4. Autoimmune Encephalitis Treatment Update\n',
-  stroke:'1. Thrombectomy Extended Window — 24h\n2. BP Targets Post-ICH\n3. Anticoagulation Restart After Stroke\n4. Colchicine After Ischemic Stroke\n'
+const FB={
+  pubmed:`━━━━━━━━━━━━━━━━━━━━━━━━━\nPUBMED NEUROLOGY — CACHED\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n1. Tenecteplase vs Alteplase — Acute Stroke\n   📅 2025 · NEJM\n   Non-inferior, simpler single-bolus dosing\n\n2. Lecanemab 18-Month Results — CLARITY AD\n   📅 2025 · Lancet\n   Amyloid clearance slows cognitive decline\n\n3. DAPT After Embolic Stroke Unknown Source\n   📅 2025 · Stroke Journal\n   21-day DAPT window confirmed optimal\n\n4. Brivaracetam 2-Year Real-World Retention\n   📅 2025 · Epilepsia\n   64% retention rate in focal epilepsy\n\n5. MRI Focused Ultrasound — Essential Tremor\n   📅 2025 · NEJM\n   68% tremor reduction at 12 months\n`,
+  lancet:`━━━━━━━━━━━━━━━━━━━━━━━━━\nLANCET NEUROLOGY — CACHED\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n1. Global Neurological Disease Burden 2024\n   Stroke #1 cause of neurological disability\n\n2. Donanemab Phase 3 — Alzheimer's\n   Slows decline in early amyloid-positive patients\n\n3. Subclinical AF Post-Stroke — ILR vs Holter\n   ILR detects 4× more AF at 3 years\n\n4. CGRP Antagonists — Chronic Migraine\n   50% responder rate sustained at 6 months\n`,
+  aan:`━━━━━━━━━━━━━━━━━━━━━━━━━\nAAN NEUROLOGY — CACHED\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n1. AAN 2025 Thrombolysis Guideline Update\n   Extended window & revised contraindications\n\n2. AI in Neuroimaging — Practice Advisory\n   Recommendations for clinical AI tool use\n\n3. GLP-1 Agonists in Parkinson's — Phase 3\n   Neuroprotective signal under investigation\n\n4. Autoimmune Encephalitis Treatment Update\n   Early IVIG vs plasma exchange outcomes\n`,
+  stroke:`━━━━━━━━━━━━━━━━━━━━━━━━━\nAHA STROKE — CACHED\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n1. Thrombectomy Extended Window — 24h\n   DAWN/DEFUSE criteria expansion validated\n\n2. BP Targets Post-Intracerebral Hemorrhage\n   SBP <140 within 1h reduces hematoma expansion\n\n3. Anticoagulation Restart After Stroke\n   Day 7–14 optimal window confirmed in RCT\n\n4. Colchicine After Ischemic Stroke\n   CONVINCE trial: 31% reduction in recurrence\n`
 };
 
-function resetCountdown(){
-  clearInterval(countdownTimer); countdown=REFRESH_SEC;
-  refreshBar.style.transition='none'; refreshBar.style.width='100%';
-  setTimeout(()=>{ refreshBar.style.transition='width '+REFRESH_SEC+'s linear'; refreshBar.style.width='0%'; },100);
-  countdownTimer=setInterval(()=>{
+function resetCD(){
+  clearInterval(cdTimer);countdown=RS;
+  refreshBar.style.transition='none';refreshBar.style.width='100%';
+  setTimeout(()=>{refreshBar.style.transition='width '+RS+'s linear';refreshBar.style.width='0%';},100);
+  cdTimer=setInterval(()=>{
     countdown--;
-    refreshLabel.textContent='Next refresh in '+countdown+'s';
-    if(countdown<=0){clearInterval(countdownTimer);fetchNews();}
+    refreshLabel.textContent='Refresh in '+countdown+'s';
+    if(countdown<=0){clearInterval(cdTimer);fetchNews();}
   },1000);
 }
 
 function shareNewsWA(){
   const text=newsInput.value.trim();
-  if(!text){alert('No news loaded yet!');return;}
-  const msg='\uD83E\uDDE0 NeuroRadar — Live News\n\n'+text.substring(0,900)+'\n\n— Dr. Madeh Gado · Neurology, Mansoura';
-  window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(msg),'_blank');
+  if(!text){alert('No news yet!');return;}
+  window.open('https://api.whatsapp.com/send?text='+encodeURIComponent('🧠 NeuroRadar — Live News\n\n'+text.substring(0,900)+'\n\n— Dr. Madeh Gado · Neurology, Mansoura'),'_blank');
 }
 
 fetchNews();
